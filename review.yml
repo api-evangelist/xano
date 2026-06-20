@@ -1,0 +1,117 @@
+aid: xano
+name: Xano
+review:
+  question: Does Xano expose a documented public WebSocket / streaming API suitable for AsyncAPI modeling?
+  answer: partial
+  date: '2026-06-20'
+  reviewer: API Evangelist
+  asyncapiSpecCreated: false
+  asyncapiScopeNote: |
+    Xano DOES have a realtime feature powered by a WebSocket server (channels,
+    presence, message history). However, the realtime surface is documented only
+    through the @xano/js-sdk client (XanoClient instanceBaseUrl + realtimeCanonical).
+    No raw WebSocket endpoint URL, wire protocol, message envelope schema, or
+    non-SDK connection method is publicly documented. Because there is no
+    documented protocol-level surface to model, no AsyncAPI document was authored.
+    The HTTP Metadata API and generated user APIs are request/response REST and
+    are modeled in openapi/xano-openapi.yml instead.
+findings:
+  summary: |
+    Xano is a no-code backend-as-a-service. Its programmatic API surface has two
+    distinct REST faces plus an SDK-only realtime layer:
+
+    1. The Metadata API - a per-instance REST API served at
+       https://{instance}.xano.io/api:meta with scoped Bearer access tokens. It
+       manages workspace contents: tables, column schema, indexes, table records
+       (content) with CRUD/bulk/search, files, branches, workspace export/import,
+       and API groups/endpoints (including retrieving each group's auto-generated
+       OpenAPI).
+    2. The Generated User APIs - the REST APIs Xano users build visually. Each API
+       group is served at its own /api:{token} path on the instance and
+       auto-generates its own OpenAPI/Swagger; the surface is defined per workspace
+       by the builder and is therefore not globally enumerable.
+    3. Realtime (WebSockets) - a documented realtime channel feature, but exposed
+       only via the @xano/js-sdk client with no published raw WebSocket URL or
+       protocol, so it is not modeled as AsyncAPI.
+  transports:
+    - protocol: REST
+      scheme: https
+      baseURL: https://{instance}.xano.io/api:meta
+      documented: true
+      note: Metadata API. Per-instance host varies by account/region.
+    - protocol: REST
+      scheme: https
+      baseURL: https://{instance}.xano.io/api:{api_group}
+      documented: true
+      note: Generated user-built API groups; per-workspace surface with its own generated OpenAPI.
+    - protocol: WebSocket
+      scheme: wss
+      documented: partial
+      note: >-
+        Realtime channels exist and run over a WebSocket server, but connection is
+        documented only through the @xano/js-sdk (instanceBaseUrl + realtimeCanonical).
+        No raw WebSocket URL or wire protocol is published, so it cannot be modeled
+        as AsyncAPI from documentation alone.
+  endpointsConfirmedRest:
+    - GET    https://{instance}.xano.io/api:meta/auth/me
+    - GET    https://{instance}.xano.io/api:meta/workspace
+    - GET    https://{instance}.xano.io/api:meta/workspace/{workspace_id}
+    - GET    https://{instance}.xano.io/api:meta/workspace/{workspace_id}/branch
+    - DELETE https://{instance}.xano.io/api:meta/workspace/{workspace_id}/branch/{branch_id}
+    - POST   https://{instance}.xano.io/api:meta/workspace/{workspace_id}/export
+    - POST   https://{instance}.xano.io/api:meta/workspace/{workspace_id}/export-schema
+    - GET    https://{instance}.xano.io/api:meta/workspace/{workspace_id}/files
+    - POST   https://{instance}.xano.io/api:meta/workspace/{workspace_id}/files/upload
+    - DELETE https://{instance}.xano.io/api:meta/workspace/{workspace_id}/files/{file_id}
+    - POST   https://{instance}.xano.io/api:meta/workspace/{workspace_id}/files/delete-batch
+    - GET    https://{instance}.xano.io/api:meta/workspace/{workspace_id}/table
+    - POST   https://{instance}.xano.io/api:meta/workspace/{workspace_id}/table
+    - GET    https://{instance}.xano.io/api:meta/workspace/{workspace_id}/table/{table_id}
+    - PATCH  https://{instance}.xano.io/api:meta/workspace/{workspace_id}/table/{table_id}
+    - DELETE https://{instance}.xano.io/api:meta/workspace/{workspace_id}/table/{table_id}
+    - GET    https://{instance}.xano.io/api:meta/workspace/{workspace_id}/table/{table_id}/schema
+    - PUT    https://{instance}.xano.io/api:meta/workspace/{workspace_id}/table/{table_id}/schema
+    - GET    https://{instance}.xano.io/api:meta/workspace/{workspace_id}/table/{table_id}/schema/{column_id}
+    - PATCH  https://{instance}.xano.io/api:meta/workspace/{workspace_id}/table/{table_id}/schema/{column_id}
+    - DELETE https://{instance}.xano.io/api:meta/workspace/{workspace_id}/table/{table_id}/schema/{column_id}
+    - GET    https://{instance}.xano.io/api:meta/workspace/{workspace_id}/table/{table_id}/index
+    - PUT    https://{instance}.xano.io/api:meta/workspace/{workspace_id}/table/{table_id}/index
+    - GET    https://{instance}.xano.io/api:meta/workspace/{workspace_id}/table/{table_id}/content
+    - POST   https://{instance}.xano.io/api:meta/workspace/{workspace_id}/table/{table_id}/content
+    - POST   https://{instance}.xano.io/api:meta/workspace/{workspace_id}/table/{table_id}/content/bulk
+    - GET    https://{instance}.xano.io/api:meta/workspace/{workspace_id}/table/{table_id}/content/{record_id}
+    - PATCH  https://{instance}.xano.io/api:meta/workspace/{workspace_id}/table/{table_id}/content/{record_id}
+    - DELETE https://{instance}.xano.io/api:meta/workspace/{workspace_id}/table/{table_id}/content/{record_id}
+    - POST   https://{instance}.xano.io/api:meta/workspace/{workspace_id}/table/{table_id}/content/search
+    - GET    https://{instance}.xano.io/api:meta/workspace/{workspace_id}/apigroup
+    - POST   https://{instance}.xano.io/api:meta/workspace/{workspace_id}/apigroup
+    - GET    https://{instance}.xano.io/api:meta/workspace/{workspace_id}/apigroup/{apigroup_id}
+    - DELETE https://{instance}.xano.io/api:meta/workspace/{workspace_id}/apigroup/{apigroup_id}
+    - GET    https://{instance}.xano.io/api:meta/workspace/{workspace_id}/apigroup/{apigroup_id}/openapi
+    - GET    https://{instance}.xano.io/api:meta/workspace/{workspace_id}/apigroup/{apigroup_id}/api
+    - POST   https://{instance}.xano.io/api:meta/workspace/{workspace_id}/apigroup/{apigroup_id}/api
+sources:
+  - url: https://docs.xano.com/xano-features/metadata-api
+    type: Documentation
+    note: Metadata API overview; base URL is the instance domain + /api:meta, Bearer access tokens.
+  - url: https://docs.xano.com/xano-features/metadata-api/tables-and-schema
+    type: APIReference
+    note: Tables, schema, and index endpoints.
+  - url: https://docs.xano.com/xano-features/metadata-api/content
+    type: APIReference
+    note: Table content (records) CRUD, bulk, and search endpoints.
+  - url: https://docs.xano.com/connecting-to-a-front-end/fundamentals
+    type: Documentation
+    note: Generated user APIs served per group at /api:{token} with their own generated OpenAPI.
+  - url: https://docs.xano.com/realtime/realtime-in-xano
+    type: Documentation
+    note: Realtime channels over WebSockets, but connection documented only via the @xano/js-sdk; no raw WebSocket URL/protocol published.
+actions:
+  asyncapiPath: null
+  apisYmlUpdated: true
+  reason: |
+    The realtime WebSocket surface has no documented protocol-level interface
+    (URL, message schema, channel bindings) outside the @xano/js-sdk, so no
+    AsyncAPI document could be authored without speculation. The two REST faces
+    (Metadata API and generated user APIs) are captured in apis.yml and the
+    Metadata API is modeled in openapi/xano-openapi.yml.

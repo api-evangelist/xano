@@ -1,0 +1,259 @@
+specification: API Commons Plans
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
+provider: Xano
+providerId: xano
+created: '2026-06-20'
+modified: '2026-06-20'
+reconciled: true
+tags:
+- No Code
+- Backend as a Service
+- BaaS
+- API Builder
+- Database
+- Serverless
+- Plans
+description: >-
+  Xano sells flat monthly subscription plans for its no-code backend platform
+  rather than metering individual API calls. The Free plan rate-limits the
+  generated REST APIs and caps records and storage; paid plans (Essential, Pro)
+  remove the API rate limit and records cap, add dedicated infrastructure,
+  branching, backups, more workspaces, team seats, and storage; the Custom plan
+  adds self-hosting, multi-tenant, SSO, and negotiated terms. Pricing below
+  reflects annual billing as published on the Xano pricing page.
+notes: >-
+  Prices and tier names change; verify against the Xano pricing page during
+  reconciliation. Paid-plan prices shown are the annual-billing monthly rate;
+  month-to-month billing is higher. The Metadata API is included on plans that
+  permit programmatic access.
+sources:
+- https://www.xano.com/pricing/
+- https://docs.xano.com/xano-features/metadata-api
+plans:
+- id: xano-free
+  name: Free
+  type: free
+  description: >-
+    No-cost plan with the visual API builder, generated REST APIs (rate
+    limited), and unlimited serverless Lambda functions, capped on records,
+    storage, and workspaces.
+  entries:
+  - label: Monthly Price
+    name: free_price
+    type: flat
+    metric: subscription
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: $0
+    userMultiplied: false
+  - label: Generated API Rate Limit
+    name: free_rate_limit
+    type: limit
+    metric: requests
+    limit: 10
+    timeFrame: 20s
+    geo: global
+    unit: 1
+    price: included
+    userMultiplied: false
+  - label: Database Records
+    name: free_records
+    type: limit
+    metric: records
+    limit: 100000
+    timeFrame: lifetime
+    geo: global
+    unit: 1
+    price: included
+    userMultiplied: false
+  - label: Storage
+    name: free_storage
+    type: limit
+    metric: gigabytes
+    limit: 1
+    timeFrame: lifetime
+    geo: global
+    unit: 1
+    price: included (watermarked media)
+    userMultiplied: false
+  - label: Workspaces
+    name: free_workspaces
+    type: limit
+    metric: workspaces
+    limit: 1
+    timeFrame: lifetime
+    geo: global
+    unit: 1
+    price: included
+    userMultiplied: false
+  elements:
+  - name: No-Code API Builder
+  - name: Generated REST APIs (rate limited)
+  - name: Unlimited Serverless Functions
+- id: xano-essential
+  name: Essential
+  type: paid
+  description: >-
+    Recommended starter paid plan with dedicated infrastructure, unlimited API
+    rate limit and records, branching/merging, background tasks, CLI sandbox
+    environments, direct database access, and rolling backups.
+  entries:
+  - label: Monthly Price (annual billing)
+    name: essential_price
+    type: flat
+    metric: subscription
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: $85/month billed annually
+    userMultiplied: false
+  - label: Generated API Rate Limit
+    name: essential_rate_limit
+    type: limit
+    metric: requests
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: unlimited
+    userMultiplied: false
+  - label: Database Records
+    name: essential_records
+    type: limit
+    metric: records
+    limit: -1
+    timeFrame: lifetime
+    geo: global
+    unit: 1
+    price: unlimited
+    userMultiplied: false
+  - label: Storage
+    name: essential_storage
+    type: limit
+    metric: gigabytes
+    limit: 100
+    timeFrame: lifetime
+    geo: global
+    unit: 1
+    price: included
+    userMultiplied: false
+  - label: Workspaces
+    name: essential_workspaces
+    type: limit
+    metric: workspaces
+    limit: 3
+    timeFrame: lifetime
+    geo: global
+    unit: 1
+    price: included
+    userMultiplied: false
+  - label: Team Seats
+    name: essential_seats
+    type: limit
+    metric: seats
+    limit: 5
+    timeFrame: lifetime
+    geo: global
+    unit: 1
+    price: included
+    userMultiplied: false
+  elements:
+  - name: Dedicated Infrastructure
+  - name: Branching and Merging
+  - name: Background Tasks
+  - name: Direct Database Access
+  - name: 7-Day Rolling Backup
+- id: xano-pro
+  name: Pro
+  type: paid
+  description: >-
+    Higher-capacity plan adding a managed load balancer, role/permissions
+    manager, longer rolling backups, more storage, workspaces, and seats, and
+    an SLA.
+  entries:
+  - label: Monthly Price (annual billing)
+    name: pro_price
+    type: flat
+    metric: subscription
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: $224/month billed annually
+    userMultiplied: false
+  - label: Generated API Rate Limit
+    name: pro_rate_limit
+    type: limit
+    metric: requests
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: unlimited
+    userMultiplied: false
+  - label: Storage
+    name: pro_storage
+    type: limit
+    metric: gigabytes
+    limit: 250
+    timeFrame: lifetime
+    geo: global
+    unit: 1
+    price: included
+    userMultiplied: false
+  - label: Workspaces
+    name: pro_workspaces
+    type: limit
+    metric: workspaces
+    limit: 5
+    timeFrame: lifetime
+    geo: global
+    unit: 1
+    price: included
+    userMultiplied: false
+  - label: Team Seats
+    name: pro_seats
+    type: limit
+    metric: seats
+    limit: 10
+    timeFrame: lifetime
+    geo: global
+    unit: 1
+    price: included
+    userMultiplied: false
+  elements:
+  - name: Managed Load Balancer
+  - name: Role and Permissions Manager
+  - name: 14-Day Rolling Backup
+  - name: 99.99% SLA
+- id: xano-custom
+  name: Custom
+  type: enterprise
+  description: >-
+    Negotiated enterprise plan with flexible scaling, self-hosting options,
+    multi-tenant deployments, dedicated IP, 24/7 monitoring, and SSO. Contact
+    Xano sales.
+  entries:
+  - label: Enterprise Agreement
+    name: custom
+    type: flat
+    metric: contract
+    limit: -1
+    timeFrame: year
+    geo: global
+    unit: 1
+    price: contact sales
+    userMultiplied: false
+  elements:
+  - name: Self-Hosting
+  - name: Multi-Tenant
+  - name: Dedicated IP
+  - name: SSO
+  - name: 24/7 Monitoring
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

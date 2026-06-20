@@ -1,0 +1,65 @@
+specification: API Commons Rate Limits
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
+provider: Xano
+providerId: xano
+created: '2026-06-20'
+modified: '2026-06-20'
+reconciled: false
+tags:
+- No Code
+- Backend as a Service
+- BaaS
+- API Builder
+- Database
+- Serverless
+- Rate Limiting
+- Quotas
+- Throttling
+description: >-
+  Xano rate limiting is driven by subscription plan rather than per-key token
+  budgets. On the Free plan the generated REST APIs are rate limited (roughly 10
+  requests per 20 seconds); paid plans (Essential, Pro) advertise unlimited API
+  rate limits subject to the dedicated instance capacity. The Metadata API and
+  user-built endpoints can additionally have per-endpoint rate limits configured
+  by the builder inside the workspace. Specific Metadata API throttle values are
+  not separately published and are not reconciled in this artifact.
+notes: >-
+  Verify the current Free-plan request allowance and any documented Metadata API
+  throttling on reconciliation; paid-plan throughput is bounded by the dedicated
+  instance size, not a published per-minute number.
+sources:
+- https://www.xano.com/pricing/
+- https://docs.xano.com/xano-features/metadata-api
+- https://docs.xano.com/connecting-to-a-front-end/fundamentals
+responseCodes:
+  throttled: 429
+limits:
+- name: Free Plan Generated API Limit
+  scope: account
+  metric: requests
+  limit: 10 per 20 seconds
+  notes: Applies to the generated REST APIs on the Free plan.
+- name: Paid Plan Generated API Limit
+  scope: account
+  metric: requests
+  limit: unlimited (bounded by instance capacity)
+  notes: Essential and Pro plans advertise unlimited API rate limits on dedicated infrastructure.
+- name: Metadata API
+  scope: token
+  metric: requests
+  limit: see provider documentation
+  notes: Authenticated with scoped Bearer access tokens; specific throttle values are not separately published.
+- name: Per-Endpoint Rate Limit
+  scope: endpoint
+  metric: requests
+  limit: configurable
+  notes: Builders can configure rate limits on individual user-built endpoints inside the workspace.
+policies:
+- name: Plan-Tiered Limits
+  description: Rate limits relax moving from Free to Essential/Pro and are bounded by the dedicated instance capacity.
+- name: Backoff Strategy
+  description: Clients should implement exponential backoff with jitter and honor 429 responses.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

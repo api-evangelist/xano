@@ -1,0 +1,285 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Xano Metadata API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Auth",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve the authenticated user.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{{instance}}.xano.io/api:meta/auth/me"
+          },
+          "docs": "Retrieve the user associated with the supplied access token."
+        },
+        {
+          "info": {
+            "name": "List workspaces accessible to the token.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{{instance}}.xano.io/api:meta/workspace"
+          },
+          "docs": "List the workspaces the access token can reach."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Workspace",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve workspace details.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{{instance}}.xano.io/api:meta/workspace/{workspace_id}"
+          },
+          "docs": "Retrieve details for a single workspace."
+        },
+        {
+          "info": {
+            "name": "List branches in the workspace.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{{instance}}.xano.io/api:meta/workspace/{workspace_id}/branch"
+          },
+          "docs": "List the branches of a workspace."
+        },
+        {
+          "info": {
+            "name": "Delete a branch.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{{instance}}.xano.io/api:meta/workspace/{workspace_id}/branch/{branch_id}"
+          },
+          "docs": "Delete a branch from a workspace."
+        },
+        {
+          "info": {
+            "name": "Export the workspace schema and data.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{{instance}}.xano.io/api:meta/workspace/{workspace_id}/export",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Export the workspace schema and data as an archive."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Tables",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List database tables in the workspace.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{{instance}}.xano.io/api:meta/workspace/{workspace_id}/table"
+          },
+          "docs": "List all database tables in a workspace."
+        },
+        {
+          "info": {
+            "name": "Create a database table.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{{instance}}.xano.io/api:meta/workspace/{workspace_id}/table",
+            "body": {
+              "type": "json",
+              "data": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"auth\": false\n}"
+            }
+          },
+          "docs": "Create a new database table."
+        },
+        {
+          "info": {
+            "name": "Retrieve the full schema of a table.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{{instance}}.xano.io/api:meta/workspace/{workspace_id}/table/{table_id}/schema"
+          },
+          "docs": "Retrieve the column schema of a table."
+        },
+        {
+          "info": {
+            "name": "Replace the entire schema of a table.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{{instance}}.xano.io/api:meta/workspace/{workspace_id}/table/{table_id}/schema",
+            "body": {
+              "type": "json",
+              "data": "{\n  \"schema\": []\n}"
+            }
+          },
+          "docs": "Replace the full schema of a table."
+        },
+        {
+          "info": {
+            "name": "List the indexes of a table.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{{instance}}.xano.io/api:meta/workspace/{workspace_id}/table/{table_id}/index"
+          },
+          "docs": "List the indexes of a table."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Content",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Browse table records (paginated).",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{{instance}}.xano.io/api:meta/workspace/{workspace_id}/table/{table_id}/content"
+          },
+          "docs": "Browse the records (content) of a table with pagination."
+        },
+        {
+          "info": {
+            "name": "Create a table record.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{{instance}}.xano.io/api:meta/workspace/{workspace_id}/table/{table_id}/content",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a single record in a table."
+        },
+        {
+          "info": {
+            "name": "Search records.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{{instance}}.xano.io/api:meta/workspace/{workspace_id}/table/{table_id}/content/search",
+            "body": {
+              "type": "json",
+              "data": "{\n  \"page\": 1,\n  \"per_page\": 50,\n  \"sort\": {},\n  \"search\": []\n}"
+            }
+          },
+          "docs": "Search table records with filtering, sorting, and pagination."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Files",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List files in the workspace file library.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{{instance}}.xano.io/api:meta/workspace/{workspace_id}/files"
+          },
+          "docs": "List the files in the workspace file library."
+        },
+        {
+          "info": {
+            "name": "Upload a file to the workspace file library.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{{instance}}.xano.io/api:meta/workspace/{workspace_id}/files/upload",
+            "body": {
+              "type": "multipart-form",
+              "data": []
+            }
+          },
+          "docs": "Upload a file to the workspace file library."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "API Groups",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List API groups in the workspace.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{{instance}}.xano.io/api:meta/workspace/{workspace_id}/apigroup"
+          },
+          "docs": "List the API groups in a workspace."
+        },
+        {
+          "info": {
+            "name": "Retrieve the auto-generated OpenAPI document for an API group.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{{instance}}.xano.io/api:meta/workspace/{workspace_id}/apigroup/{apigroup_id}/openapi"
+          },
+          "docs": "Retrieve the OpenAPI/Swagger document Xano generates for the user-built endpoints in an API group."
+        }
+      ]
+    }
+  ]
+}
