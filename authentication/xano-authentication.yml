@@ -1,0 +1,14 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/xano-openapi.yml
+summary:
+  types:
+  - http
+schemes:
+- name: bearerAuth
+  type: http
+  scheme: bearer
+  description: 'Scoped Metadata API access token generated from your Xano instance settings
+    (Instances > Metadata API > Manage Access Tokens). Sent as `Authorization: Bearer <token>`.'
+  sources:
+  - openapi/xano-openapi.yml
