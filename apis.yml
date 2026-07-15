@@ -164,6 +164,8 @@ apis:
     The Metadata API is authenticated with scoped Bearer access tokens generated from
     instance settings with CRUD permission scopes.
 common:
+- type: AgenticAccess
+  url: agentic-access/xano-agentic-access.yml
 - type: TrustCenter
   url: security/xano-trust-center.yml
 - type: VulnerabilityDisclosure
