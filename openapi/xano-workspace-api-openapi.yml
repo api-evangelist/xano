@@ -1,0 +1,176 @@
+openapi: 3.0.1
+info:
+  title: Xano Metadata API Groups Workspace API
+  description: The Xano Metadata API lets you programmatically manage the contents of a Xano workspace - database tables, column schema, indexes, table records (content), files, branches, API groups and their endpoints. It is served from each Xano instance at the templated host below, appended with the `/api:meta` path, and is authenticated with scoped Bearer access tokens generated from instance settings. Separately, each user-built API group in a workspace auto-generates its own OpenAPI/Swagger document served at that group's `/api:{token}` path; those generated, per-workspace specifications are not enumerated here.
+  termsOfService: https://www.xano.com/legal/
+  contact:
+    name: Xano Support
+    url: https://docs.xano.com/xano-features/metadata-api
+  version: '1.0'
+servers:
+- url: https://{instance}.xano.io/api:meta
+  description: Per-instance Metadata API base URL. Replace {instance} with your Xano instance subdomain (for example, x1a2-b3c4-d5e6). The host varies per account and region; copy the exact instance domain from your Xano instance settings.
+  variables:
+    instance:
+      default: your-instance
+      description: Your Xano instance subdomain.
+security:
+- bearerAuth: []
+tags:
+- name: Workspace
+  description: Workspace details, branches, import/export.
+paths:
+  /workspace:
+    get:
+      operationId: listWorkspaces
+      tags:
+      - Workspace
+      summary: List workspaces accessible to the token.
+      responses:
+        '200':
+          description: An array of workspaces.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Workspace'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /workspace/{workspace_id}:
+    get:
+      operationId: getWorkspace
+      tags:
+      - Workspace
+      summary: Retrieve workspace details.
+      parameters:
+      - $ref: '#/components/parameters/WorkspaceId'
+      responses:
+        '200':
+          description: Workspace details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Workspace'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /workspace/{workspace_id}/branch:
+    get:
+      operationId: listBranches
+      tags:
+      - Workspace
+      summary: List branches in the workspace.
+      parameters:
+      - $ref: '#/components/parameters/WorkspaceId'
+      responses:
+        '200':
+          description: An array of branches.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Branch'
+  /workspace/{workspace_id}/branch/{branch_id}:
+    delete:
+      operationId: deleteBranch
+      tags:
+      - Workspace
+      summary: Delete a branch.
+      parameters:
+      - $ref: '#/components/parameters/WorkspaceId'
+      - $ref: '#/components/parameters/BranchId'
+      responses:
+        '200':
+          $ref: '#/components/responses/Success'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /workspace/{workspace_id}/export-schema:
+    post:
+      operationId: exportWorkspaceSchema
+      tags:
+      - Workspace
+      summary: Export the workspace schema.
+      parameters:
+      - $ref: '#/components/parameters/WorkspaceId'
+      responses:
+        '200':
+          $ref: '#/components/responses/Success'
+  /workspace/{workspace_id}/export:
+    post:
+      operationId: exportWorkspace
+      tags:
+      - Workspace
+      summary: Export the workspace schema and data as an archive.
+      parameters:
+      - $ref: '#/components/parameters/WorkspaceId'
+      responses:
+        '200':
+          $ref: '#/components/responses/Success'
+components:
+  schemas:
+    Workspace:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        description:
+          type: string
+    Branch:
+      type: object
+      properties:
+        id:
+          type: string
+        label:
+          type: string
+        live:
+          type: boolean
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        payload:
+          nullable: true
+  responses:
+    Success:
+      description: The operation succeeded.
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+    Unauthorized:
+      description: Missing or invalid access token.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Resource not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  parameters:
+    WorkspaceId:
+      name: workspace_id
+      in: path
+      required: true
+      schema:
+        type: integer
+    BranchId:
+      name: branch_id
+      in: path
+      required: true
+      schema:
+        type: string
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: 'Scoped Metadata API access token generated from your Xano instance settings (Instances > Metadata API > Manage Access Tokens). Sent as `Authorization: Bearer <token>`.'

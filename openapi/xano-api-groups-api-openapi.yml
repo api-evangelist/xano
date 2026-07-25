@@ -1,0 +1,197 @@
+openapi: 3.0.1
+info:
+  title: Xano Metadata API Groups API
+  description: The Xano Metadata API lets you programmatically manage the contents of a Xano workspace - database tables, column schema, indexes, table records (content), files, branches, API groups and their endpoints. It is served from each Xano instance at the templated host below, appended with the `/api:meta` path, and is authenticated with scoped Bearer access tokens generated from instance settings. Separately, each user-built API group in a workspace auto-generates its own OpenAPI/Swagger document served at that group's `/api:{token}` path; those generated, per-workspace specifications are not enumerated here.
+  termsOfService: https://www.xano.com/legal/
+  contact:
+    name: Xano Support
+    url: https://docs.xano.com/xano-features/metadata-api
+  version: '1.0'
+servers:
+- url: https://{instance}.xano.io/api:meta
+  description: Per-instance Metadata API base URL. Replace {instance} with your Xano instance subdomain (for example, x1a2-b3c4-d5e6). The host varies per account and region; copy the exact instance domain from your Xano instance settings.
+  variables:
+    instance:
+      default: your-instance
+      description: Your Xano instance subdomain.
+security:
+- bearerAuth: []
+tags:
+- name: API Groups
+  description: API groups, their endpoints, and generated OpenAPI.
+paths:
+  /workspace/{workspace_id}/apigroup:
+    get:
+      operationId: listApiGroups
+      tags:
+      - API Groups
+      summary: List API groups in the workspace.
+      parameters:
+      - $ref: '#/components/parameters/WorkspaceId'
+      responses:
+        '200':
+          description: An array of API groups.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ApiGroup'
+    post:
+      operationId: createApiGroup
+      tags:
+      - API Groups
+      summary: Create an API group.
+      parameters:
+      - $ref: '#/components/parameters/WorkspaceId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ApiGroup'
+      responses:
+        '200':
+          description: The created API group.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiGroup'
+  /workspace/{workspace_id}/apigroup/{apigroup_id}:
+    get:
+      operationId: getApiGroup
+      tags:
+      - API Groups
+      summary: Retrieve an API group.
+      parameters:
+      - $ref: '#/components/parameters/WorkspaceId'
+      - $ref: '#/components/parameters/ApiGroupId'
+      responses:
+        '200':
+          description: The API group.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiGroup'
+    delete:
+      operationId: deleteApiGroup
+      tags:
+      - API Groups
+      summary: Delete an API group.
+      parameters:
+      - $ref: '#/components/parameters/WorkspaceId'
+      - $ref: '#/components/parameters/ApiGroupId'
+      responses:
+        '200':
+          $ref: '#/components/responses/Success'
+  /workspace/{workspace_id}/apigroup/{apigroup_id}/openapi:
+    get:
+      operationId: getApiGroupOpenApi
+      tags:
+      - API Groups
+      summary: Retrieve the auto-generated OpenAPI document for an API group.
+      description: Returns the OpenAPI/Swagger specification that Xano generates for the user-built endpoints in this API group.
+      parameters:
+      - $ref: '#/components/parameters/WorkspaceId'
+      - $ref: '#/components/parameters/ApiGroupId'
+      responses:
+        '200':
+          description: The generated OpenAPI document.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+  /workspace/{workspace_id}/apigroup/{apigroup_id}/api:
+    get:
+      operationId: listApiEndpoints
+      tags:
+      - API Groups
+      summary: List endpoints in an API group.
+      parameters:
+      - $ref: '#/components/parameters/WorkspaceId'
+      - $ref: '#/components/parameters/ApiGroupId'
+      responses:
+        '200':
+          description: An array of endpoints.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ApiEndpoint'
+    post:
+      operationId: createApiEndpoint
+      tags:
+      - API Groups
+      summary: Create an endpoint in an API group.
+      parameters:
+      - $ref: '#/components/parameters/WorkspaceId'
+      - $ref: '#/components/parameters/ApiGroupId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ApiEndpoint'
+      responses:
+        '200':
+          description: The created endpoint.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiEndpoint'
+components:
+  responses:
+    Success:
+      description: The operation succeeded.
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+  parameters:
+    ApiGroupId:
+      name: apigroup_id
+      in: path
+      required: true
+      schema:
+        type: integer
+    WorkspaceId:
+      name: workspace_id
+      in: path
+      required: true
+      schema:
+        type: integer
+  schemas:
+    ApiEndpoint:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        verb:
+          type: string
+          description: HTTP method (GET, POST, PUT, PATCH, DELETE).
+        path:
+          type: string
+    ApiGroup:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        description:
+          type: string
+        canonical:
+          type: string
+          description: 'The /api: path token under which this group''s endpoints are served.'
+        swagger:
+          type: boolean
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: 'Scoped Metadata API access token generated from your Xano instance settings (Instances > Metadata API > Manage Access Tokens). Sent as `Authorization: Bearer <token>`.'

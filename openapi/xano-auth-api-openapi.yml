@@ -1,0 +1,69 @@
+openapi: 3.0.1
+info:
+  title: Xano Metadata API Groups Auth API
+  description: The Xano Metadata API lets you programmatically manage the contents of a Xano workspace - database tables, column schema, indexes, table records (content), files, branches, API groups and their endpoints. It is served from each Xano instance at the templated host below, appended with the `/api:meta` path, and is authenticated with scoped Bearer access tokens generated from instance settings. Separately, each user-built API group in a workspace auto-generates its own OpenAPI/Swagger document served at that group's `/api:{token}` path; those generated, per-workspace specifications are not enumerated here.
+  termsOfService: https://www.xano.com/legal/
+  contact:
+    name: Xano Support
+    url: https://docs.xano.com/xano-features/metadata-api
+  version: '1.0'
+servers:
+- url: https://{instance}.xano.io/api:meta
+  description: Per-instance Metadata API base URL. Replace {instance} with your Xano instance subdomain (for example, x1a2-b3c4-d5e6). The host varies per account and region; copy the exact instance domain from your Xano instance settings.
+  variables:
+    instance:
+      default: your-instance
+      description: Your Xano instance subdomain.
+security:
+- bearerAuth: []
+tags:
+- name: Auth
+  description: Authenticated user and accessible workspaces.
+paths:
+  /auth/me:
+    get:
+      operationId: getAuthenticatedUser
+      tags:
+      - Auth
+      summary: Retrieve the authenticated user.
+      responses:
+        '200':
+          description: The user associated with the supplied access token.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        email:
+          type: string
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        payload:
+          nullable: true
+  responses:
+    Unauthorized:
+      description: Missing or invalid access token.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: 'Scoped Metadata API access token generated from your Xano instance settings (Instances > Metadata API > Manage Access Tokens). Sent as `Authorization: Bearer <token>`.'

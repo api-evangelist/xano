@@ -1,0 +1,254 @@
+openapi: 3.0.1
+info:
+  title: Xano Metadata API Groups Content API
+  description: The Xano Metadata API lets you programmatically manage the contents of a Xano workspace - database tables, column schema, indexes, table records (content), files, branches, API groups and their endpoints. It is served from each Xano instance at the templated host below, appended with the `/api:meta` path, and is authenticated with scoped Bearer access tokens generated from instance settings. Separately, each user-built API group in a workspace auto-generates its own OpenAPI/Swagger document served at that group's `/api:{token}` path; those generated, per-workspace specifications are not enumerated here.
+  termsOfService: https://www.xano.com/legal/
+  contact:
+    name: Xano Support
+    url: https://docs.xano.com/xano-features/metadata-api
+  version: '1.0'
+servers:
+- url: https://{instance}.xano.io/api:meta
+  description: Per-instance Metadata API base URL. Replace {instance} with your Xano instance subdomain (for example, x1a2-b3c4-d5e6). The host varies per account and region; copy the exact instance domain from your Xano instance settings.
+  variables:
+    instance:
+      default: your-instance
+      description: Your Xano instance subdomain.
+security:
+- bearerAuth: []
+tags:
+- name: Content
+  description: Table records (database content) CRUD and search.
+paths:
+  /workspace/{workspace_id}/table/{table_id}/content:
+    get:
+      operationId: listRecords
+      tags:
+      - Content
+      summary: Browse table records (paginated).
+      parameters:
+      - $ref: '#/components/parameters/WorkspaceId'
+      - $ref: '#/components/parameters/TableId'
+      - name: page
+        in: query
+        schema:
+          type: integer
+      - name: per_page
+        in: query
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: A paginated list of records.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RecordList'
+    post:
+      operationId: createRecord
+      tags:
+      - Content
+      summary: Create a table record.
+      parameters:
+      - $ref: '#/components/parameters/WorkspaceId'
+      - $ref: '#/components/parameters/TableId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Record'
+      responses:
+        '200':
+          description: The created record.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Record'
+  /workspace/{workspace_id}/table/{table_id}/content/bulk:
+    post:
+      operationId: createRecordsBulk
+      tags:
+      - Content
+      summary: Create multiple records in one call.
+      parameters:
+      - $ref: '#/components/parameters/WorkspaceId'
+      - $ref: '#/components/parameters/TableId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                items:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/Record'
+      responses:
+        '200':
+          $ref: '#/components/responses/Success'
+  /workspace/{workspace_id}/table/{table_id}/content/{record_id}:
+    get:
+      operationId: getRecord
+      tags:
+      - Content
+      summary: Retrieve a single record.
+      parameters:
+      - $ref: '#/components/parameters/WorkspaceId'
+      - $ref: '#/components/parameters/TableId'
+      - $ref: '#/components/parameters/RecordId'
+      responses:
+        '200':
+          description: The record.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Record'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    patch:
+      operationId: updateRecord
+      tags:
+      - Content
+      summary: Update a single record.
+      parameters:
+      - $ref: '#/components/parameters/WorkspaceId'
+      - $ref: '#/components/parameters/TableId'
+      - $ref: '#/components/parameters/RecordId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Record'
+      responses:
+        '200':
+          description: The updated record.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Record'
+    delete:
+      operationId: deleteRecord
+      tags:
+      - Content
+      summary: Delete a single record.
+      parameters:
+      - $ref: '#/components/parameters/WorkspaceId'
+      - $ref: '#/components/parameters/TableId'
+      - $ref: '#/components/parameters/RecordId'
+      responses:
+        '200':
+          $ref: '#/components/responses/Success'
+  /workspace/{workspace_id}/table/{table_id}/content/search:
+    post:
+      operationId: searchRecords
+      tags:
+      - Content
+      summary: Search records with filtering, sorting, and pagination.
+      parameters:
+      - $ref: '#/components/parameters/WorkspaceId'
+      - $ref: '#/components/parameters/TableId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SearchRequest'
+      responses:
+        '200':
+          description: Matching records.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RecordList'
+components:
+  schemas:
+    RecordList:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Record'
+        itemsReceived:
+          type: integer
+        itemsTotal:
+          type: integer
+        pageTotal:
+          type: integer
+        curPage:
+          type: integer
+        nextPage:
+          type: integer
+          nullable: true
+        prevPage:
+          type: integer
+          nullable: true
+    SearchRequest:
+      type: object
+      properties:
+        page:
+          type: integer
+        per_page:
+          type: integer
+        sort:
+          type: object
+          additionalProperties:
+            type: string
+        search:
+          type: array
+          items:
+            type: object
+    Record:
+      type: object
+      additionalProperties: true
+      description: A table record; properties correspond to the table's columns.
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        payload:
+          nullable: true
+  responses:
+    Success:
+      description: The operation succeeded.
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+    NotFound:
+      description: Resource not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  parameters:
+    TableId:
+      name: table_id
+      in: path
+      required: true
+      schema:
+        type: integer
+    WorkspaceId:
+      name: workspace_id
+      in: path
+      required: true
+      schema:
+        type: integer
+    RecordId:
+      name: record_id
+      in: path
+      required: true
+      schema:
+        type: integer
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: 'Scoped Metadata API access token generated from your Xano instance settings (Instances > Metadata API > Manage Access Tokens). Sent as `Authorization: Bearer <token>`.'

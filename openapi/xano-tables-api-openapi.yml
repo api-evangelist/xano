@@ -1,0 +1,345 @@
+openapi: 3.0.1
+info:
+  title: Xano Metadata API Groups Tables API
+  description: The Xano Metadata API lets you programmatically manage the contents of a Xano workspace - database tables, column schema, indexes, table records (content), files, branches, API groups and their endpoints. It is served from each Xano instance at the templated host below, appended with the `/api:meta` path, and is authenticated with scoped Bearer access tokens generated from instance settings. Separately, each user-built API group in a workspace auto-generates its own OpenAPI/Swagger document served at that group's `/api:{token}` path; those generated, per-workspace specifications are not enumerated here.
+  termsOfService: https://www.xano.com/legal/
+  contact:
+    name: Xano Support
+    url: https://docs.xano.com/xano-features/metadata-api
+  version: '1.0'
+servers:
+- url: https://{instance}.xano.io/api:meta
+  description: Per-instance Metadata API base URL. Replace {instance} with your Xano instance subdomain (for example, x1a2-b3c4-d5e6). The host varies per account and region; copy the exact instance domain from your Xano instance settings.
+  variables:
+    instance:
+      default: your-instance
+      description: Your Xano instance subdomain.
+security:
+- bearerAuth: []
+tags:
+- name: Tables
+  description: Database tables, schema, and indexes.
+paths:
+  /workspace/{workspace_id}/table:
+    get:
+      operationId: listTables
+      tags:
+      - Tables
+      summary: List database tables in the workspace.
+      parameters:
+      - $ref: '#/components/parameters/WorkspaceId'
+      responses:
+        '200':
+          description: An array of tables.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Table'
+    post:
+      operationId: createTable
+      tags:
+      - Tables
+      summary: Create a database table.
+      parameters:
+      - $ref: '#/components/parameters/WorkspaceId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TableCreate'
+      responses:
+        '200':
+          description: The created table.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Table'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+  /workspace/{workspace_id}/table/{table_id}:
+    get:
+      operationId: getTable
+      tags:
+      - Tables
+      summary: Retrieve table details.
+      parameters:
+      - $ref: '#/components/parameters/WorkspaceId'
+      - $ref: '#/components/parameters/TableId'
+      responses:
+        '200':
+          description: Table details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Table'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    patch:
+      operationId: updateTable
+      tags:
+      - Tables
+      summary: Update table properties.
+      parameters:
+      - $ref: '#/components/parameters/WorkspaceId'
+      - $ref: '#/components/parameters/TableId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TableCreate'
+      responses:
+        '200':
+          description: The updated table.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Table'
+    delete:
+      operationId: deleteTable
+      tags:
+      - Tables
+      summary: Delete a table.
+      parameters:
+      - $ref: '#/components/parameters/WorkspaceId'
+      - $ref: '#/components/parameters/TableId'
+      responses:
+        '200':
+          $ref: '#/components/responses/Success'
+  /workspace/{workspace_id}/table/{table_id}/schema:
+    get:
+      operationId: getTableSchema
+      tags:
+      - Tables
+      summary: Retrieve the full schema of a table.
+      parameters:
+      - $ref: '#/components/parameters/WorkspaceId'
+      - $ref: '#/components/parameters/TableId'
+      responses:
+        '200':
+          description: The table schema (array of columns).
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Column'
+    put:
+      operationId: replaceTableSchema
+      tags:
+      - Tables
+      summary: Replace the entire schema of a table.
+      parameters:
+      - $ref: '#/components/parameters/WorkspaceId'
+      - $ref: '#/components/parameters/TableId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                schema:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/Column'
+      responses:
+        '200':
+          $ref: '#/components/responses/Success'
+  /workspace/{workspace_id}/table/{table_id}/schema/{column_id}:
+    get:
+      operationId: getColumn
+      tags:
+      - Tables
+      summary: Retrieve a single column.
+      parameters:
+      - $ref: '#/components/parameters/WorkspaceId'
+      - $ref: '#/components/parameters/TableId'
+      - $ref: '#/components/parameters/ColumnId'
+      responses:
+        '200':
+          description: The column.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Column'
+    patch:
+      operationId: renameColumn
+      tags:
+      - Tables
+      summary: Rename or update a column.
+      parameters:
+      - $ref: '#/components/parameters/WorkspaceId'
+      - $ref: '#/components/parameters/TableId'
+      - $ref: '#/components/parameters/ColumnId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Column'
+      responses:
+        '200':
+          $ref: '#/components/responses/Success'
+    delete:
+      operationId: deleteColumn
+      tags:
+      - Tables
+      summary: Delete a column.
+      parameters:
+      - $ref: '#/components/parameters/WorkspaceId'
+      - $ref: '#/components/parameters/TableId'
+      - $ref: '#/components/parameters/ColumnId'
+      responses:
+        '200':
+          $ref: '#/components/responses/Success'
+  /workspace/{workspace_id}/table/{table_id}/index:
+    get:
+      operationId: listIndexes
+      tags:
+      - Tables
+      summary: List the indexes of a table.
+      parameters:
+      - $ref: '#/components/parameters/WorkspaceId'
+      - $ref: '#/components/parameters/TableId'
+      responses:
+        '200':
+          description: An array of indexes.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Index'
+    put:
+      operationId: replaceIndexes
+      tags:
+      - Tables
+      summary: Replace the indexes of a table.
+      parameters:
+      - $ref: '#/components/parameters/WorkspaceId'
+      - $ref: '#/components/parameters/TableId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Index'
+      responses:
+        '200':
+          $ref: '#/components/responses/Success'
+components:
+  schemas:
+    Table:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        description:
+          type: string
+        auth:
+          type: boolean
+        created_at:
+          type: string
+    Index:
+      type: object
+      properties:
+        type:
+          type: string
+          description: Index type (btree, gin, unique, primary, search, etc.).
+        fields:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+              op:
+                type: string
+    TableCreate:
+      type: object
+      required:
+      - name
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        auth:
+          type: boolean
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        payload:
+          nullable: true
+    Column:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        type:
+          type: string
+          description: Xano column type (text, int, decimal, bool, timestamp, email, json, etc.).
+        nullable:
+          type: boolean
+        required:
+          type: boolean
+        default:
+          nullable: true
+  responses:
+    Success:
+      description: The operation succeeded.
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+    NotFound:
+      description: Resource not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Input error.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  parameters:
+    TableId:
+      name: table_id
+      in: path
+      required: true
+      schema:
+        type: integer
+    WorkspaceId:
+      name: workspace_id
+      in: path
+      required: true
+      schema:
+        type: integer
+    ColumnId:
+      name: column_id
+      in: path
+      required: true
+      schema:
+        type: string
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: 'Scoped Metadata API access token generated from your Xano instance settings (Instances > Metadata API > Manage Access Tokens). Sent as `Authorization: Bearer <token>`.'

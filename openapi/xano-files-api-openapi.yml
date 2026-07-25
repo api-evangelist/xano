@@ -1,0 +1,154 @@
+openapi: 3.0.1
+info:
+  title: Xano Metadata API Groups Files API
+  description: The Xano Metadata API lets you programmatically manage the contents of a Xano workspace - database tables, column schema, indexes, table records (content), files, branches, API groups and their endpoints. It is served from each Xano instance at the templated host below, appended with the `/api:meta` path, and is authenticated with scoped Bearer access tokens generated from instance settings. Separately, each user-built API group in a workspace auto-generates its own OpenAPI/Swagger document served at that group's `/api:{token}` path; those generated, per-workspace specifications are not enumerated here.
+  termsOfService: https://www.xano.com/legal/
+  contact:
+    name: Xano Support
+    url: https://docs.xano.com/xano-features/metadata-api
+  version: '1.0'
+servers:
+- url: https://{instance}.xano.io/api:meta
+  description: Per-instance Metadata API base URL. Replace {instance} with your Xano instance subdomain (for example, x1a2-b3c4-d5e6). The host varies per account and region; copy the exact instance domain from your Xano instance settings.
+  variables:
+    instance:
+      default: your-instance
+      description: Your Xano instance subdomain.
+security:
+- bearerAuth: []
+tags:
+- name: Files
+  description: Workspace file library.
+paths:
+  /workspace/{workspace_id}/files:
+    get:
+      operationId: listFiles
+      tags:
+      - Files
+      summary: List files in the workspace file library.
+      parameters:
+      - $ref: '#/components/parameters/WorkspaceId'
+      - name: page
+        in: query
+        schema:
+          type: integer
+      - name: per_page
+        in: query
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: A paginated list of files.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FileList'
+  /workspace/{workspace_id}/files/upload:
+    post:
+      operationId: uploadFile
+      tags:
+      - Files
+      summary: Upload a file to the workspace file library.
+      parameters:
+      - $ref: '#/components/parameters/WorkspaceId'
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                content:
+                  type: string
+                  format: binary
+      responses:
+        '200':
+          description: The uploaded file resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/File'
+  /workspace/{workspace_id}/files/{file_id}:
+    delete:
+      operationId: deleteFile
+      tags:
+      - Files
+      summary: Delete a file.
+      parameters:
+      - $ref: '#/components/parameters/WorkspaceId'
+      - name: file_id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          $ref: '#/components/responses/Success'
+  /workspace/{workspace_id}/files/delete-batch:
+    post:
+      operationId: deleteFilesBatch
+      tags:
+      - Files
+      summary: Delete multiple files.
+      parameters:
+      - $ref: '#/components/parameters/WorkspaceId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                file_ids:
+                  type: array
+                  items:
+                    type: integer
+      responses:
+        '200':
+          $ref: '#/components/responses/Success'
+components:
+  parameters:
+    WorkspaceId:
+      name: workspace_id
+      in: path
+      required: true
+      schema:
+        type: integer
+  schemas:
+    File:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        path:
+          type: string
+        type:
+          type: string
+        size:
+          type: integer
+        mime:
+          type: string
+    FileList:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/File'
+        itemsTotal:
+          type: integer
+  responses:
+    Success:
+      description: The operation succeeded.
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: 'Scoped Metadata API access token generated from your Xano instance settings (Instances > Metadata API > Manage Access Tokens). Sent as `Authorization: Bearer <token>`.'
