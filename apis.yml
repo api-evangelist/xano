@@ -7,7 +7,20 @@ description: Xano is a no-code backend / backend-as-a-service that lets users vi
   functions. Each workspace auto-generates its own OpenAPI/Swagger for the user-built
   API groups, and a separate per-instance Metadata API lets you manage tables, schema,
   records, files, and branches programmatically with Bearer auth.
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: freemium
+  onboarding: self-serve
+  trial: false
+  try_now: true
+  public: false
+  label: Freemium · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/xano.png
 tags:
 - No Code
 - Backend as a Service
@@ -19,114 +32,6 @@ created: '2026-06-20'
 modified: '2026-06-20'
 specificationVersion: '0.19'
 apis:
-- aid: xano:xano-metadata-tables-schema-api
-  name: Xano Metadata Tables & Schema API
-  tags:
-  - Metadata API
-  - Tables
-  - Schema
-  - Indexes
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://docs.xano.com/xano-features/metadata-api/tables-and-schema
-  baseURL: https://{instance}.xano.io/api:meta
-  properties:
-  - url: https://docs.xano.com/xano-features/metadata-api/tables-and-schema
-    type: Documentation
-  - url: https://docs.xano.com/xano-features/metadata-api
-    type: APIReference
-  - url: openapi/xano-openapi.yml
-    type: OpenAPI
-  - url: collections/xano.postman_collection.json
-    type: PostmanCollection
-  - url: collections/xano.opencollection.json
-    type: OpenCollection
-  description: Programmatically create, read, update, and delete database tables, their
-    column schema, and indexes within a Xano workspace using the per-instance Metadata
-    API.
-- aid: xano:xano-metadata-records-content-api
-  name: Xano Metadata Records & Content API
-  tags:
-  - Metadata API
-  - Records
-  - Content
-  - CRUD
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://docs.xano.com/xano-features/metadata-api/content
-  baseURL: https://{instance}.xano.io/api:meta
-  properties:
-  - url: https://docs.xano.com/xano-features/metadata-api/content
-    type: Documentation
-  - url: openapi/xano-openapi.yml
-    type: OpenAPI
-  - url: collections/xano.postman_collection.json
-    type: PostmanCollection
-  - url: collections/xano.opencollection.json
-    type: OpenCollection
-  description: Browse, retrieve, create, update, search, and delete database records
-    (table content) individually or in batches through the Metadata API content endpoints.
-- aid: xano:xano-metadata-files-api
-  name: Xano Metadata Files API
-  tags:
-  - Metadata API
-  - Files
-  - Storage
-  - Media
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://docs.xano.com/xano-features/metadata-api
-  baseURL: https://{instance}.xano.io/api:meta
-  properties:
-  - url: https://docs.xano.com/xano-features/metadata-api
-    type: Documentation
-  - url: openapi/xano-openapi.yml
-    type: OpenAPI
-  - url: collections/xano.postman_collection.json
-    type: PostmanCollection
-  - url: collections/xano.opencollection.json
-    type: OpenCollection
-  description: Upload, list, and delete files in a workspace file library, including
-    batch deletion, via the Metadata API files endpoints.
-- aid: xano:xano-metadata-branches-workspace-api
-  name: Xano Metadata Branches & Workspace API
-  tags:
-  - Metadata API
-  - Branches
-  - Workspace
-  - Import Export
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://docs.xano.com/xano-features/metadata-api
-  baseURL: https://{instance}.xano.io/api:meta
-  properties:
-  - url: https://docs.xano.com/xano-features/metadata-api
-    type: Documentation
-  - url: openapi/xano-openapi.yml
-    type: OpenAPI
-  - url: collections/xano.postman_collection.json
-    type: PostmanCollection
-  - url: collections/xano.opencollection.json
-    type: OpenCollection
-  description: Inspect workspace details, list and delete branches, and export or import
-    workspace schema and data archives through the Metadata API workspace endpoints.
-- aid: xano:xano-metadata-api-groups-api
-  name: Xano Metadata API Groups & Endpoints API
-  tags:
-  - Metadata API
-  - API Groups
-  - Endpoints
-  - OpenAPI
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://docs.xano.com/xano-features/metadata-api
-  baseURL: https://{instance}.xano.io/api:meta
-  properties:
-  - url: https://docs.xano.com/xano-features/metadata-api
-    type: Documentation
-  - url: openapi/xano-openapi.yml
-    type: OpenAPI
-  - url: collections/xano.postman_collection.json
-    type: PostmanCollection
-  - url: collections/xano.opencollection.json
-    type: OpenCollection
-  description: Create and manage API groups and their endpoints, and retrieve the auto-generated
-    OpenAPI/Swagger document for the user-built APIs each workspace exposes.
 - aid: xano:xano-generated-user-apis
   name: Xano Generated User APIs
   tags:
@@ -142,27 +47,142 @@ apis:
     type: Documentation
   - url: https://docs.xano.com/xano-features/metadata-api
     type: APIReference
-  description: The REST APIs that Xano users build visually. Each API group is served
-    at its own /api:{token} path on the instance and auto-generates its own OpenAPI/Swagger
-    document; surface, paths, and auth are defined per workspace by the builder.
-- aid: xano:xano-metadata-auth-api
-  name: Xano Metadata Auth & Access API
-  tags:
-  - Metadata API
-  - Authentication
-  - Access Tokens
-  - Bearer
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://docs.xano.com/xano-features/metadata-api
+  description: >-
+    The REST APIs that Xano users build visually. Each API group is served at its own /api:{token} path
+    on the instance and auto-generates its own OpenAPI/Swagger document; surface, paths, and auth are
+    defined per workspace by the builder.
+- aid: xano:xano-api-groups-api
+  name: Xano API Groups API
+  description: API groups, their endpoints, and generated OpenAPI.
+  humanURL: https://docs.xano.com/xano-features/metadata-api/tables-and-schema
   baseURL: https://{instance}.xano.io/api:meta
+  tags:
+  - API Groups
   properties:
-  - url: https://docs.xano.com/xano-features/metadata-api
-    type: Documentation
-  - url: openapi/xano-openapi.yml
-    type: OpenAPI
-  description: Identify the authenticated user and enumerate accessible workspaces.
-    The Metadata API is authenticated with scoped Bearer access tokens generated from
-    instance settings with CRUD permission scopes.
+  - type: OpenAPI
+    url: openapi/xano-api-groups-api-openapi.yml
+  - type: Documentation
+    url: https://docs.xano.com/xano-features/metadata-api/tables-and-schema
+  - type: APIReference
+    url: https://docs.xano.com/xano-features/metadata-api
+  - type: PostmanCollection
+    url: collections/xano.postman_collection.json
+  - type: OpenCollection
+    url: collections/xano.opencollection.json
+  - type: Documentation
+    url: https://docs.xano.com/xano-features/metadata-api/content
+  - type: Documentation
+    url: https://docs.xano.com/xano-features/metadata-api
+- aid: xano:xano-auth-api
+  name: Xano Auth API
+  description: Authenticated user and accessible workspaces.
+  humanURL: https://docs.xano.com/xano-features/metadata-api/tables-and-schema
+  baseURL: https://{instance}.xano.io/api:meta
+  tags:
+  - Auth
+  properties:
+  - type: OpenAPI
+    url: openapi/xano-auth-api-openapi.yml
+  - type: Documentation
+    url: https://docs.xano.com/xano-features/metadata-api/tables-and-schema
+  - type: APIReference
+    url: https://docs.xano.com/xano-features/metadata-api
+  - type: PostmanCollection
+    url: collections/xano.postman_collection.json
+  - type: OpenCollection
+    url: collections/xano.opencollection.json
+  - type: Documentation
+    url: https://docs.xano.com/xano-features/metadata-api/content
+  - type: Documentation
+    url: https://docs.xano.com/xano-features/metadata-api
+- aid: xano:xano-content-api
+  name: Xano Content API
+  description: Table records (database content) CRUD and search.
+  humanURL: https://docs.xano.com/xano-features/metadata-api/tables-and-schema
+  baseURL: https://{instance}.xano.io/api:meta
+  tags:
+  - Content
+  properties:
+  - type: OpenAPI
+    url: openapi/xano-content-api-openapi.yml
+  - type: Documentation
+    url: https://docs.xano.com/xano-features/metadata-api/tables-and-schema
+  - type: APIReference
+    url: https://docs.xano.com/xano-features/metadata-api
+  - type: PostmanCollection
+    url: collections/xano.postman_collection.json
+  - type: OpenCollection
+    url: collections/xano.opencollection.json
+  - type: Documentation
+    url: https://docs.xano.com/xano-features/metadata-api/content
+  - type: Documentation
+    url: https://docs.xano.com/xano-features/metadata-api
+- aid: xano:xano-files-api
+  name: Xano Files API
+  description: Workspace file library.
+  humanURL: https://docs.xano.com/xano-features/metadata-api/tables-and-schema
+  baseURL: https://{instance}.xano.io/api:meta
+  tags:
+  - Files
+  properties:
+  - type: OpenAPI
+    url: openapi/xano-files-api-openapi.yml
+  - type: Documentation
+    url: https://docs.xano.com/xano-features/metadata-api/tables-and-schema
+  - type: APIReference
+    url: https://docs.xano.com/xano-features/metadata-api
+  - type: PostmanCollection
+    url: collections/xano.postman_collection.json
+  - type: OpenCollection
+    url: collections/xano.opencollection.json
+  - type: Documentation
+    url: https://docs.xano.com/xano-features/metadata-api/content
+  - type: Documentation
+    url: https://docs.xano.com/xano-features/metadata-api
+- aid: xano:xano-tables-api
+  name: Xano Tables API
+  description: Database tables, schema, and indexes.
+  humanURL: https://docs.xano.com/xano-features/metadata-api/tables-and-schema
+  baseURL: https://{instance}.xano.io/api:meta
+  tags:
+  - Tables
+  properties:
+  - type: OpenAPI
+    url: openapi/xano-tables-api-openapi.yml
+  - type: Documentation
+    url: https://docs.xano.com/xano-features/metadata-api/tables-and-schema
+  - type: APIReference
+    url: https://docs.xano.com/xano-features/metadata-api
+  - type: PostmanCollection
+    url: collections/xano.postman_collection.json
+  - type: OpenCollection
+    url: collections/xano.opencollection.json
+  - type: Documentation
+    url: https://docs.xano.com/xano-features/metadata-api/content
+  - type: Documentation
+    url: https://docs.xano.com/xano-features/metadata-api
+- aid: xano:xano-workspace-api
+  name: Xano Workspace API
+  description: Workspace details, branches, import/export.
+  humanURL: https://docs.xano.com/xano-features/metadata-api/tables-and-schema
+  baseURL: https://{instance}.xano.io/api:meta
+  tags:
+  - Workspace
+  properties:
+  - type: OpenAPI
+    url: openapi/xano-workspace-api-openapi.yml
+  - type: Documentation
+    url: https://docs.xano.com/xano-features/metadata-api/tables-and-schema
+  - type: APIReference
+    url: https://docs.xano.com/xano-features/metadata-api
+  - type: PostmanCollection
+    url: collections/xano.postman_collection.json
+  - type: OpenCollection
+    url: collections/xano.opencollection.json
+  - type: Documentation
+    url: https://docs.xano.com/xano-features/metadata-api/content
+  - type: Documentation
+    url: https://docs.xano.com/xano-features/metadata-api
 common:
 - type: AgenticAccess
   url: agentic-access/xano-agentic-access.yml
