@@ -1,0 +1,24 @@
+{
+  "provider": "xano",
+  "sources": [
+    "xano-api-groups-api-openapi.yml",
+    "xano-auth-api-openapi.yml",
+    "xano-content-api-openapi.yml",
+    "xano-files-api-openapi.yml",
+    "xano-tables-api-openapi.yml",
+    "xano-workspace-api-openapi.yml"
+  ],
+  "outputs": [
+    "xano-api-groups-api-openapi.yml",
+    "xano-auth-api-openapi.yml",
+    "xano-content-api-openapi.yml",
+    "xano-files-api-openapi.yml",
+    "xano-tables-api-openapi.yml",
+    "xano-workspace-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
