@@ -1,0 +1,325 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Xano Metadata API Groups Tables API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Tables",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List database tables in the workspace.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{instance}.xano.io/api:meta/workspace/:workspace_id/table",
+            "params": [
+              {
+                "name": "workspace_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "List database tables in the workspace."
+        },
+        {
+          "info": {
+            "name": "Create a database table.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{instance}.xano.io/api:meta/workspace/:workspace_id/table",
+            "params": [
+              {
+                "name": "workspace_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a database table."
+        },
+        {
+          "info": {
+            "name": "Retrieve table details.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{instance}.xano.io/api:meta/workspace/:workspace_id/table/:table_id",
+            "params": [
+              {
+                "name": "workspace_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "table_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieve table details."
+        },
+        {
+          "info": {
+            "name": "Update table properties.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{instance}.xano.io/api:meta/workspace/:workspace_id/table/:table_id",
+            "params": [
+              {
+                "name": "workspace_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "table_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update table properties."
+        },
+        {
+          "info": {
+            "name": "Delete a table.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{instance}.xano.io/api:meta/workspace/:workspace_id/table/:table_id",
+            "params": [
+              {
+                "name": "workspace_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "table_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete a table."
+        },
+        {
+          "info": {
+            "name": "Retrieve the full schema of a table.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{instance}.xano.io/api:meta/workspace/:workspace_id/table/:table_id/schema",
+            "params": [
+              {
+                "name": "workspace_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "table_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieve the full schema of a table."
+        },
+        {
+          "info": {
+            "name": "Replace the entire schema of a table.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{instance}.xano.io/api:meta/workspace/:workspace_id/table/:table_id/schema",
+            "params": [
+              {
+                "name": "workspace_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "table_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Replace the entire schema of a table."
+        },
+        {
+          "info": {
+            "name": "Retrieve a single column.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{instance}.xano.io/api:meta/workspace/:workspace_id/table/:table_id/schema/:column_id",
+            "params": [
+              {
+                "name": "workspace_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "table_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "column_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieve a single column."
+        },
+        {
+          "info": {
+            "name": "Rename or update a column.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://{instance}.xano.io/api:meta/workspace/:workspace_id/table/:table_id/schema/:column_id",
+            "params": [
+              {
+                "name": "workspace_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "table_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "column_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Rename or update a column."
+        },
+        {
+          "info": {
+            "name": "Delete a column.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{instance}.xano.io/api:meta/workspace/:workspace_id/table/:table_id/schema/:column_id",
+            "params": [
+              {
+                "name": "workspace_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "table_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "column_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete a column."
+        },
+        {
+          "info": {
+            "name": "List the indexes of a table.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{instance}.xano.io/api:meta/workspace/:workspace_id/table/:table_id/index",
+            "params": [
+              {
+                "name": "workspace_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "table_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "List the indexes of a table."
+        },
+        {
+          "info": {
+            "name": "Replace the indexes of a table.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://{instance}.xano.io/api:meta/workspace/:workspace_id/table/:table_id/index",
+            "params": [
+              {
+                "name": "workspace_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "table_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Replace the indexes of a table."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

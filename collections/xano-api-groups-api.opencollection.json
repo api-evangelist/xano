@@ -1,0 +1,183 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Xano Metadata API Groups API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "API Groups",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List API groups in the workspace.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{instance}.xano.io/api:meta/workspace/:workspace_id/apigroup",
+            "params": [
+              {
+                "name": "workspace_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "List API groups in the workspace."
+        },
+        {
+          "info": {
+            "name": "Create an API group.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{instance}.xano.io/api:meta/workspace/:workspace_id/apigroup",
+            "params": [
+              {
+                "name": "workspace_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create an API group."
+        },
+        {
+          "info": {
+            "name": "Retrieve an API group.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{instance}.xano.io/api:meta/workspace/:workspace_id/apigroup/:apigroup_id",
+            "params": [
+              {
+                "name": "workspace_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "apigroup_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieve an API group."
+        },
+        {
+          "info": {
+            "name": "Delete an API group.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{instance}.xano.io/api:meta/workspace/:workspace_id/apigroup/:apigroup_id",
+            "params": [
+              {
+                "name": "workspace_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "apigroup_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete an API group."
+        },
+        {
+          "info": {
+            "name": "Retrieve the auto-generated OpenAPI document for an API group.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{instance}.xano.io/api:meta/workspace/:workspace_id/apigroup/:apigroup_id/openapi",
+            "params": [
+              {
+                "name": "workspace_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "apigroup_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Returns the OpenAPI/Swagger specification that Xano generates for the user-built endpoints in this API group."
+        },
+        {
+          "info": {
+            "name": "List endpoints in an API group.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{instance}.xano.io/api:meta/workspace/:workspace_id/apigroup/:apigroup_id/api",
+            "params": [
+              {
+                "name": "workspace_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "apigroup_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "List endpoints in an API group."
+        },
+        {
+          "info": {
+            "name": "Create an endpoint in an API group.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{instance}.xano.io/api:meta/workspace/:workspace_id/apigroup/:apigroup_id/api",
+            "params": [
+              {
+                "name": "workspace_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "apigroup_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create an endpoint in an API group."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

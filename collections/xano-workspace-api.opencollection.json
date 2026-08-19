@@ -1,0 +1,130 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Xano Metadata API Groups Workspace API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Workspace",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List workspaces accessible to the token.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{instance}.xano.io/api:meta/workspace"
+          },
+          "docs": "List workspaces accessible to the token."
+        },
+        {
+          "info": {
+            "name": "Retrieve workspace details.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{instance}.xano.io/api:meta/workspace/:workspace_id",
+            "params": [
+              {
+                "name": "workspace_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieve workspace details."
+        },
+        {
+          "info": {
+            "name": "List branches in the workspace.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://{instance}.xano.io/api:meta/workspace/:workspace_id/branch",
+            "params": [
+              {
+                "name": "workspace_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "List branches in the workspace."
+        },
+        {
+          "info": {
+            "name": "Delete a branch.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://{instance}.xano.io/api:meta/workspace/:workspace_id/branch/:branch_id",
+            "params": [
+              {
+                "name": "workspace_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "branch_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete a branch."
+        },
+        {
+          "info": {
+            "name": "Export the workspace schema.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{instance}.xano.io/api:meta/workspace/:workspace_id/export-schema",
+            "params": [
+              {
+                "name": "workspace_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Export the workspace schema."
+        },
+        {
+          "info": {
+            "name": "Export the workspace schema and data as an archive.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://{instance}.xano.io/api:meta/workspace/:workspace_id/export",
+            "params": [
+              {
+                "name": "workspace_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Export the workspace schema and data as an archive."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
