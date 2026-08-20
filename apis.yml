@@ -22,6 +22,12 @@ accessModel:
   method: derived
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/xano.png
 tags:
+- No-Code
+- Backend-as-a-Service
+- API Builder
+- Database
+- Serverless
+tags_raw:
 - No Code
 - Backend as a Service
 - BaaS
@@ -35,6 +41,11 @@ apis:
 - aid: xano:xano-generated-user-apis
   name: Xano Generated User APIs
   tags:
+  - Generated API
+  - REST
+  - No-Code
+  - OpenAPI
+  tags_raw:
   - Generated API
   - REST
   - No Code
@@ -79,6 +90,8 @@ apis:
   humanURL: https://docs.xano.com/xano-features/metadata-api/tables-and-schema
   baseURL: https://{instance}.xano.io/api:meta
   tags:
+  - Authentication
+  tags_raw:
   - Auth
   properties:
   - type: OpenAPI
@@ -123,6 +136,8 @@ apis:
   humanURL: https://docs.xano.com/xano-features/metadata-api/tables-and-schema
   baseURL: https://{instance}.xano.io/api:meta
   tags:
+  - File
+  tags_raw:
   - Files
   properties:
   - type: OpenAPI
