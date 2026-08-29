@@ -7,6 +7,18 @@ description: Xano is a no-code backend / backend-as-a-service that lets users vi
   functions. Each workspace auto-generates its own OpenAPI/Swagger for the user-built
   API groups, and a separate per-instance Metadata API lets you manage tables, schema,
   records, files, and branches programmatically with Bearer auth.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: freemium
   onboarding: self-serve
