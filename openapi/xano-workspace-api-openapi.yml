@@ -1,7 +1,7 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Xano Metadata API Groups Workspace API
-  description: The Xano Metadata API lets you programmatically manage the contents of a Xano workspace - database tables, column schema, indexes, table records (content), files, branches, API groups and their endpoints. It is served from each Xano instance at the templated host below, appended with the `/api:meta` path, and is authenticated with scoped Bearer access tokens generated from instance settings. Separately, each user-built API group in a workspace auto-generates its own OpenAPI/Swagger document served at that group's `/api:{token}` path; those generated, per-workspace specifications are not enumerated here.
+  title: Xano Metadata Workspace API
+  description: The Xano Metadata API lets you programmatically manage the contents of a Xano workspace - database tables, column schema, indexes, table records (content), files, branches, API groups and their endpoints.
   termsOfService: https://www.xano.com/legal/
   contact:
     name: Xano Support
@@ -25,7 +25,7 @@ paths:
       operationId: listWorkspaces
       tags:
       - Workspace
-      summary: List workspaces accessible to the token.
+      summary: List workspaces accessible to the token
       responses:
         '200':
           description: An array of workspaces.
@@ -42,7 +42,7 @@ paths:
       operationId: getWorkspace
       tags:
       - Workspace
-      summary: Retrieve workspace details.
+      summary: Retrieve workspace details
       parameters:
       - $ref: '#/components/parameters/WorkspaceId'
       responses:
@@ -59,7 +59,7 @@ paths:
       operationId: listBranches
       tags:
       - Workspace
-      summary: List branches in the workspace.
+      summary: List branches in the workspace
       parameters:
       - $ref: '#/components/parameters/WorkspaceId'
       responses:
@@ -76,7 +76,7 @@ paths:
       operationId: deleteBranch
       tags:
       - Workspace
-      summary: Delete a branch.
+      summary: Delete a branch
       parameters:
       - $ref: '#/components/parameters/WorkspaceId'
       - $ref: '#/components/parameters/BranchId'
@@ -90,7 +90,7 @@ paths:
       operationId: exportWorkspaceSchema
       tags:
       - Workspace
-      summary: Export the workspace schema.
+      summary: Export the workspace schema
       parameters:
       - $ref: '#/components/parameters/WorkspaceId'
       responses:
@@ -101,41 +101,13 @@ paths:
       operationId: exportWorkspace
       tags:
       - Workspace
-      summary: Export the workspace schema and data as an archive.
+      summary: Export the workspace schema and data as an archive
       parameters:
       - $ref: '#/components/parameters/WorkspaceId'
       responses:
         '200':
           $ref: '#/components/responses/Success'
 components:
-  schemas:
-    Workspace:
-      type: object
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-        description:
-          type: string
-    Branch:
-      type: object
-      properties:
-        id:
-          type: string
-        label:
-          type: string
-        live:
-          type: boolean
-    Error:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-        payload:
-          nullable: true
   responses:
     Success:
       description: The operation succeeded.
@@ -156,19 +128,46 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
+  schemas:
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        payload: {}
+    Workspace:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        description:
+          type: string
+    Branch:
+      type: object
+      properties:
+        id:
+          type: string
+        label:
+          type: string
+        live:
+          type: boolean
   parameters:
-    WorkspaceId:
-      name: workspace_id
-      in: path
-      required: true
-      schema:
-        type: integer
     BranchId:
       name: branch_id
       in: path
       required: true
       schema:
         type: string
+    WorkspaceId:
+      name: workspace_id
+      in: path
+      required: true
+      schema:
+        type: integer
   securitySchemes:
     bearerAuth:
       type: http

@@ -1,0 +1,1 @@
+{"resource":"https://mcp.xano.com","authorization_servers":["https://app.xano.com"],"bearer_methods_supported":["header"],"scopes_supported":["mcp:tools","mcp:resources","mcp:prompts","workspace:read","workspace:write","offline_access"]}

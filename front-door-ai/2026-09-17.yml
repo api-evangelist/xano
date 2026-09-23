@@ -1,0 +1,29 @@
+# Front Door AI Index — xano — 2026-09-17
+# AI vocabulary counted on the provider's root page. Generated; do not edit.
+# `score` is null unless ownership is `own` — see front_door_ai.py.
+front_door_ai:
+  slug: xano
+  lexicon_version: '1.0'
+  probed_at: '2026-09-17'
+  host: www.xano.com
+  final_host: www.xano.com
+  ownership: own
+  owner: xano
+  shares_host_with: null
+  inherited_from: null
+  verdict: scored
+  score: 19
+  host_score: 19
+  density: 26.03
+  words: 730
+  tiers:
+    agentic: 1
+    core: 14
+    model: 4
+  ambiguous: 8
+  top_terms:
+    AI: 14
+    agent: 8
+    Claude: 3
+    ChatGPT: 1
+    MCP: 1

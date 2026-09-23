@@ -1,7 +1,7 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Xano Metadata API Groups Files API
-  description: The Xano Metadata API lets you programmatically manage the contents of a Xano workspace - database tables, column schema, indexes, table records (content), files, branches, API groups and their endpoints. It is served from each Xano instance at the templated host below, appended with the `/api:meta` path, and is authenticated with scoped Bearer access tokens generated from instance settings. Separately, each user-built API group in a workspace auto-generates its own OpenAPI/Swagger document served at that group's `/api:{token}` path; those generated, per-workspace specifications are not enumerated here.
+  title: Xano Metadata Files API
+  description: The Xano Metadata API lets you programmatically manage the contents of a Xano workspace - database tables, column schema, indexes, table records (content), files, branches, API groups and their endpoints.
   termsOfService: https://www.xano.com/legal/
   contact:
     name: Xano Support
@@ -25,7 +25,7 @@ paths:
       operationId: listFiles
       tags:
       - Files
-      summary: List files in the workspace file library.
+      summary: List files in the workspace file library
       parameters:
       - $ref: '#/components/parameters/WorkspaceId'
       - name: page
@@ -48,7 +48,7 @@ paths:
       operationId: uploadFile
       tags:
       - Files
-      summary: Upload a file to the workspace file library.
+      summary: Upload a file to the workspace file library
       parameters:
       - $ref: '#/components/parameters/WorkspaceId'
       requestBody:
@@ -73,7 +73,7 @@ paths:
       operationId: deleteFile
       tags:
       - Files
-      summary: Delete a file.
+      summary: Delete a file
       parameters:
       - $ref: '#/components/parameters/WorkspaceId'
       - name: file_id
@@ -89,7 +89,7 @@ paths:
       operationId: deleteFilesBatch
       tags:
       - Files
-      summary: Delete multiple files.
+      summary: Delete multiple files
       parameters:
       - $ref: '#/components/parameters/WorkspaceId'
       requestBody:
@@ -114,7 +114,24 @@ components:
       required: true
       schema:
         type: integer
+  responses:
+    Success:
+      description: The operation succeeded.
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
   schemas:
+    FileList:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/File'
+        itemsTotal:
+          type: integer
     File:
       type: object
       properties:
@@ -130,23 +147,6 @@ components:
           type: integer
         mime:
           type: string
-    FileList:
-      type: object
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/File'
-        itemsTotal:
-          type: integer
-  responses:
-    Success:
-      description: The operation succeeded.
-      content:
-        application/json:
-          schema:
-            type: object
-            additionalProperties: true
   securitySchemes:
     bearerAuth:
       type: http

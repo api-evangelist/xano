@@ -1,12 +1,7 @@
 {
   "provider": "xano",
   "sources": [
-    "xano-api-groups-api-openapi.yml",
-    "xano-auth-api-openapi.yml",
-    "xano-content-api-openapi.yml",
-    "xano-files-api-openapi.yml",
-    "xano-tables-api-openapi.yml",
-    "xano-workspace-api-openapi.yml"
+    "_original/xano-openapi.yml"
   ],
   "outputs": [
     "xano-api-groups-api-openapi.yml",
@@ -19,6 +14,17 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "xano-openapi.yml: upgraded openapi 3.0.1 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "xano-api-groups-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "xano-auth-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "xano-content-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "xano-files-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "xano-tables-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "xano-workspace-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

@@ -1,7 +1,7 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
   title: Xano Metadata API Groups API
-  description: The Xano Metadata API lets you programmatically manage the contents of a Xano workspace - database tables, column schema, indexes, table records (content), files, branches, API groups and their endpoints. It is served from each Xano instance at the templated host below, appended with the `/api:meta` path, and is authenticated with scoped Bearer access tokens generated from instance settings. Separately, each user-built API group in a workspace auto-generates its own OpenAPI/Swagger document served at that group's `/api:{token}` path; those generated, per-workspace specifications are not enumerated here.
+  description: The Xano Metadata API lets you programmatically manage the contents of a Xano workspace - database tables, column schema, indexes, table records (content), files, branches, API groups and their endpoints.
   termsOfService: https://www.xano.com/legal/
   contact:
     name: Xano Support
@@ -25,7 +25,7 @@ paths:
       operationId: listApiGroups
       tags:
       - API Groups
-      summary: List API groups in the workspace.
+      summary: List API groups in the workspace
       parameters:
       - $ref: '#/components/parameters/WorkspaceId'
       responses:
@@ -41,7 +41,7 @@ paths:
       operationId: createApiGroup
       tags:
       - API Groups
-      summary: Create an API group.
+      summary: Create an API group
       parameters:
       - $ref: '#/components/parameters/WorkspaceId'
       requestBody:
@@ -62,7 +62,7 @@ paths:
       operationId: getApiGroup
       tags:
       - API Groups
-      summary: Retrieve an API group.
+      summary: Retrieve an API group
       parameters:
       - $ref: '#/components/parameters/WorkspaceId'
       - $ref: '#/components/parameters/ApiGroupId'
@@ -77,7 +77,7 @@ paths:
       operationId: deleteApiGroup
       tags:
       - API Groups
-      summary: Delete an API group.
+      summary: Delete an API group
       parameters:
       - $ref: '#/components/parameters/WorkspaceId'
       - $ref: '#/components/parameters/ApiGroupId'
@@ -89,7 +89,7 @@ paths:
       operationId: getApiGroupOpenApi
       tags:
       - API Groups
-      summary: Retrieve the auto-generated OpenAPI document for an API group.
+      summary: Retrieve the auto-generated OpenAPI document for an API group
       description: Returns the OpenAPI/Swagger specification that Xano generates for the user-built endpoints in this API group.
       parameters:
       - $ref: '#/components/parameters/WorkspaceId'
@@ -107,7 +107,7 @@ paths:
       operationId: listApiEndpoints
       tags:
       - API Groups
-      summary: List endpoints in an API group.
+      summary: List endpoints in an API group
       parameters:
       - $ref: '#/components/parameters/WorkspaceId'
       - $ref: '#/components/parameters/ApiGroupId'
@@ -124,7 +124,7 @@ paths:
       operationId: createApiEndpoint
       tags:
       - API Groups
-      summary: Create an endpoint in an API group.
+      summary: Create an endpoint in an API group
       parameters:
       - $ref: '#/components/parameters/WorkspaceId'
       - $ref: '#/components/parameters/ApiGroupId'
@@ -150,19 +150,6 @@ components:
           schema:
             type: object
             additionalProperties: true
-  parameters:
-    ApiGroupId:
-      name: apigroup_id
-      in: path
-      required: true
-      schema:
-        type: integer
-    WorkspaceId:
-      name: workspace_id
-      in: path
-      required: true
-      schema:
-        type: integer
   schemas:
     ApiEndpoint:
       type: object
@@ -190,6 +177,19 @@ components:
           description: 'The /api: path token under which this group''s endpoints are served.'
         swagger:
           type: boolean
+  parameters:
+    WorkspaceId:
+      name: workspace_id
+      in: path
+      required: true
+      schema:
+        type: integer
+    ApiGroupId:
+      name: apigroup_id
+      in: path
+      required: true
+      schema:
+        type: integer
   securitySchemes:
     bearerAuth:
       type: http
