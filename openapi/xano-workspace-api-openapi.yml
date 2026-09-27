@@ -108,6 +108,46 @@ paths:
         '200':
           $ref: '#/components/responses/Success'
 components:
+  parameters:
+    WorkspaceId:
+      name: workspace_id
+      in: path
+      required: true
+      schema:
+        type: integer
+    BranchId:
+      name: branch_id
+      in: path
+      required: true
+      schema:
+        type: string
+  schemas:
+    Branch:
+      type: object
+      properties:
+        id:
+          type: string
+        label:
+          type: string
+        live:
+          type: boolean
+    Workspace:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        description:
+          type: string
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        payload: {}
   responses:
     Success:
       description: The operation succeeded.
@@ -128,46 +168,6 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-  schemas:
-    Error:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-        payload: {}
-    Workspace:
-      type: object
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-        description:
-          type: string
-    Branch:
-      type: object
-      properties:
-        id:
-          type: string
-        label:
-          type: string
-        live:
-          type: boolean
-  parameters:
-    BranchId:
-      name: branch_id
-      in: path
-      required: true
-      schema:
-        type: string
-    WorkspaceId:
-      name: workspace_id
-      in: path
-      required: true
-      schema:
-        type: integer
   securitySchemes:
     bearerAuth:
       type: http

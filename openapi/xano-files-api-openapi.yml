@@ -114,24 +114,7 @@ components:
       required: true
       schema:
         type: integer
-  responses:
-    Success:
-      description: The operation succeeded.
-      content:
-        application/json:
-          schema:
-            type: object
-            additionalProperties: true
   schemas:
-    FileList:
-      type: object
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/File'
-        itemsTotal:
-          type: integer
     File:
       type: object
       properties:
@@ -147,6 +130,23 @@ components:
           type: integer
         mime:
           type: string
+    FileList:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/File'
+        itemsTotal:
+          type: integer
+  responses:
+    Success:
+      description: The operation succeeded.
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
   securitySchemes:
     bearerAuth:
       type: http

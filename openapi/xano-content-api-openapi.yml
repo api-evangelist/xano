@@ -164,29 +164,45 @@ paths:
               schema:
                 $ref: '#/components/schemas/RecordList'
 components:
-  responses:
-    Success:
-      description: The operation succeeded.
-      content:
-        application/json:
-          schema:
-            type: object
-            additionalProperties: true
-    NotFound:
-      description: Resource not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
+  parameters:
+    WorkspaceId:
+      name: workspace_id
+      in: path
+      required: true
+      schema:
+        type: integer
+    TableId:
+      name: table_id
+      in: path
+      required: true
+      schema:
+        type: integer
+    RecordId:
+      name: record_id
+      in: path
+      required: true
+      schema:
+        type: integer
   schemas:
-    Error:
+    Record:
+      type: object
+      additionalProperties: true
+      description: A table record; properties correspond to the table's columns.
+    SearchRequest:
       type: object
       properties:
-        code:
-          type: string
-        message:
-          type: string
-        payload: {}
+        page:
+          type: integer
+        per_page:
+          type: integer
+        sort:
+          type: object
+          additionalProperties:
+            type: string
+        search:
+          type: array
+          items:
+            type: object
     RecordList:
       type: object
       properties:
@@ -210,44 +226,28 @@ components:
           type:
           - integer
           - 'null'
-    Record:
-      type: object
-      additionalProperties: true
-      description: A table record; properties correspond to the table's columns.
-    SearchRequest:
+    Error:
       type: object
       properties:
-        page:
-          type: integer
-        per_page:
-          type: integer
-        sort:
-          type: object
-          additionalProperties:
-            type: string
-        search:
-          type: array
-          items:
+        code:
+          type: string
+        message:
+          type: string
+        payload: {}
+  responses:
+    Success:
+      description: The operation succeeded.
+      content:
+        application/json:
+          schema:
             type: object
-  parameters:
-    RecordId:
-      name: record_id
-      in: path
-      required: true
-      schema:
-        type: integer
-    WorkspaceId:
-      name: workspace_id
-      in: path
-      required: true
-      schema:
-        type: integer
-    TableId:
-      name: table_id
-      in: path
-      required: true
-      schema:
-        type: integer
+            additionalProperties: true
+    NotFound:
+      description: Resource not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
     bearerAuth:
       type: http

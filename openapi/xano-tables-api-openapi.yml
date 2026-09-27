@@ -235,64 +235,40 @@ paths:
           $ref: '#/components/responses/Success'
 components:
   parameters:
-    ColumnId:
-      name: column_id
-      in: path
-      required: true
-      schema:
-        type: string
     WorkspaceId:
       name: workspace_id
       in: path
       required: true
       schema:
         type: integer
+    ColumnId:
+      name: column_id
+      in: path
+      required: true
+      schema:
+        type: string
     TableId:
       name: table_id
       in: path
       required: true
       schema:
         type: integer
-  responses:
-    Success:
-      description: The operation succeeded.
-      content:
-        application/json:
-          schema:
-            type: object
-            additionalProperties: true
-    BadRequest:
-      description: Input error.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: Resource not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   schemas:
-    Error:
+    Column:
       type: object
       properties:
-        code:
+        id:
           type: string
-        message:
-          type: string
-        payload: {}
-    TableCreate:
-      type: object
-      required:
-      - name
-      properties:
         name:
           type: string
-        description:
+        type:
           type: string
-        auth:
+          description: Xano column type (text, int, decimal, bool, timestamp, email, json, etc.).
+        nullable:
           type: boolean
+        required:
+          type: boolean
+        default: {}
     Table:
       type: object
       properties:
@@ -321,21 +297,45 @@ components:
                 type: string
               op:
                 type: string
-    Column:
+    Error:
       type: object
       properties:
-        id:
+        code:
           type: string
+        message:
+          type: string
+        payload: {}
+    TableCreate:
+      type: object
+      required:
+      - name
+      properties:
         name:
           type: string
-        type:
+        description:
           type: string
-          description: Xano column type (text, int, decimal, bool, timestamp, email, json, etc.).
-        nullable:
+        auth:
           type: boolean
-        required:
-          type: boolean
-        default: {}
+  responses:
+    Success:
+      description: The operation succeeded.
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+    BadRequest:
+      description: Input error.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Resource not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
     bearerAuth:
       type: http
