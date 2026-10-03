@@ -234,25 +234,26 @@ paths:
         '200':
           $ref: '#/components/responses/Success'
 components:
-  parameters:
-    WorkspaceId:
-      name: workspace_id
-      in: path
-      required: true
-      schema:
-        type: integer
-    ColumnId:
-      name: column_id
-      in: path
-      required: true
-      schema:
-        type: string
-    TableId:
-      name: table_id
-      in: path
-      required: true
-      schema:
-        type: integer
+  responses:
+    NotFound:
+      description: Resource not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Success:
+      description: The operation succeeded.
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+    BadRequest:
+      description: Input error.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
     Column:
       type: object
@@ -269,19 +270,6 @@ components:
         required:
           type: boolean
         default: {}
-    Table:
-      type: object
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-        description:
-          type: string
-        auth:
-          type: boolean
-        created_at:
-          type: string
     Index:
       type: object
       properties:
@@ -297,6 +285,19 @@ components:
                 type: string
               op:
                 type: string
+    Table:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        description:
+          type: string
+        auth:
+          type: boolean
+        created_at:
+          type: string
     Error:
       type: object
       properties:
@@ -316,26 +317,25 @@ components:
           type: string
         auth:
           type: boolean
-  responses:
-    Success:
-      description: The operation succeeded.
-      content:
-        application/json:
-          schema:
-            type: object
-            additionalProperties: true
-    BadRequest:
-      description: Input error.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: Resource not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
+  parameters:
+    WorkspaceId:
+      name: workspace_id
+      in: path
+      required: true
+      schema:
+        type: integer
+    TableId:
+      name: table_id
+      in: path
+      required: true
+      schema:
+        type: integer
+    ColumnId:
+      name: column_id
+      in: path
+      required: true
+      schema:
+        type: string
   securitySchemes:
     bearerAuth:
       type: http

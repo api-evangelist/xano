@@ -155,19 +155,15 @@ components:
       required: true
       schema:
         type: integer
+  responses:
+    Success:
+      description: The operation succeeded.
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
   schemas:
-    ApiEndpoint:
-      type: object
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-        verb:
-          type: string
-          description: HTTP method (GET, POST, PUT, PATCH, DELETE).
-        path:
-          type: string
     ApiGroup:
       type: object
       properties:
@@ -182,14 +178,18 @@ components:
           description: 'The /api: path token under which this group''s endpoints are served.'
         swagger:
           type: boolean
-  responses:
-    Success:
-      description: The operation succeeded.
-      content:
-        application/json:
-          schema:
-            type: object
-            additionalProperties: true
+    ApiEndpoint:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        verb:
+          type: string
+          description: HTTP method (GET, POST, PUT, PATCH, DELETE).
+        path:
+          type: string
   securitySchemes:
     bearerAuth:
       type: http

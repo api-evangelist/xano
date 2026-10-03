@@ -107,14 +107,16 @@ paths:
         '200':
           $ref: '#/components/responses/Success'
 components:
-  parameters:
-    WorkspaceId:
-      name: workspace_id
-      in: path
-      required: true
-      schema:
-        type: integer
   schemas:
+    FileList:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/File'
+        itemsTotal:
+          type: integer
     File:
       type: object
       properties:
@@ -130,15 +132,13 @@ components:
           type: integer
         mime:
           type: string
-    FileList:
-      type: object
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/File'
-        itemsTotal:
-          type: integer
+  parameters:
+    WorkspaceId:
+      name: workspace_id
+      in: path
+      required: true
+      schema:
+        type: integer
   responses:
     Success:
       description: The operation succeeded.
