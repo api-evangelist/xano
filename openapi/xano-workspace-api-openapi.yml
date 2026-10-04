@@ -109,6 +109,14 @@ paths:
           $ref: '#/components/responses/Success'
 components:
   schemas:
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        payload: {}
     Branch:
       type: object
       properties:
@@ -118,14 +126,6 @@ components:
           type: string
         live:
           type: boolean
-    Error:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-        payload: {}
     Workspace:
       type: object
       properties:
@@ -142,12 +142,6 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Missing or invalid access token.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
     Success:
       description: The operation succeeded.
       content:
@@ -155,19 +149,25 @@ components:
           schema:
             type: object
             additionalProperties: true
+    Unauthorized:
+      description: Missing or invalid access token.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   parameters:
-    WorkspaceId:
-      name: workspace_id
-      in: path
-      required: true
-      schema:
-        type: integer
     BranchId:
       name: branch_id
       in: path
       required: true
       schema:
         type: string
+    WorkspaceId:
+      name: workspace_id
+      in: path
+      required: true
+      schema:
+        type: integer
   securitySchemes:
     bearerAuth:
       type: http

@@ -164,23 +164,9 @@ paths:
               schema:
                 $ref: '#/components/schemas/RecordList'
 components:
-  responses:
-    NotFound:
-      description: Resource not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Success:
-      description: The operation succeeded.
-      content:
-        application/json:
-          schema:
-            type: object
-            additionalProperties: true
   parameters:
-    RecordId:
-      name: record_id
+    TableId:
+      name: table_id
       in: path
       required: true
       schema:
@@ -191,8 +177,8 @@ components:
       required: true
       schema:
         type: integer
-    TableId:
-      name: table_id
+    RecordId:
+      name: record_id
       in: path
       required: true
       schema:
@@ -221,6 +207,10 @@ components:
           type: array
           items:
             type: object
+    Record:
+      type: object
+      additionalProperties: true
+      description: A table record; properties correspond to the table's columns.
     RecordList:
       type: object
       properties:
@@ -244,10 +234,20 @@ components:
           type:
           - integer
           - 'null'
-    Record:
-      type: object
-      additionalProperties: true
-      description: A table record; properties correspond to the table's columns.
+  responses:
+    NotFound:
+      description: Resource not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Success:
+      description: The operation succeeded.
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
   securitySchemes:
     bearerAuth:
       type: http

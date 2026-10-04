@@ -142,19 +142,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/ApiEndpoint'
 components:
-  parameters:
-    WorkspaceId:
-      name: workspace_id
-      in: path
-      required: true
-      schema:
-        type: integer
-    ApiGroupId:
-      name: apigroup_id
-      in: path
-      required: true
-      schema:
-        type: integer
   responses:
     Success:
       description: The operation succeeded.
@@ -163,7 +150,32 @@ components:
           schema:
             type: object
             additionalProperties: true
+  parameters:
+    ApiGroupId:
+      name: apigroup_id
+      in: path
+      required: true
+      schema:
+        type: integer
+    WorkspaceId:
+      name: workspace_id
+      in: path
+      required: true
+      schema:
+        type: integer
   schemas:
+    ApiEndpoint:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        verb:
+          type: string
+          description: HTTP method (GET, POST, PUT, PATCH, DELETE).
+        path:
+          type: string
     ApiGroup:
       type: object
       properties:
@@ -178,18 +190,6 @@ components:
           description: 'The /api: path token under which this group''s endpoints are served.'
         swagger:
           type: boolean
-    ApiEndpoint:
-      type: object
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-        verb:
-          type: string
-          description: HTTP method (GET, POST, PUT, PATCH, DELETE).
-        path:
-          type: string
   securitySchemes:
     bearerAuth:
       type: http
