@@ -1,19 +1,108 @@
-generated: '2026-07-15'
+generated: '2026-09-23'
 method: generated
-source: openapi/xano-openapi.yml
+source: openapi/xano-api-groups-api-openapi.yml, openapi/xano-auth-api-openapi.yml, openapi/xano-content-api-openapi.yml,
+  openapi/xano-files-api-openapi.yml, openapi/xano-tables-api-openapi.yml, openapi/xano-workspace-api-openapi.yml
 description: Recommended x-agentic-access execution contracts, classified heuristically from
   the OpenAPI. A governance starting point for exposing this API to AI agents — review and bind
   audience per deployment. See research/curity/agentic-governance/.
 summary:
   operations: 37
   by_action_class:
-    connected: 16
-    acting: 21
+    connected: 17
+    acting: 20
   by_consequence:
-    read: 16
-    write: 21
+    read: 17
+    write: 20
   human_in_the_loop_required: 0
 operations:
+- path: /workspace/{workspace_id}/apigroup
+  method: get
+  operationId: listApiGroups
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /workspace/{workspace_id}/apigroup
+  method: post
+  operationId: createApiGroup
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /workspace/{workspace_id}/apigroup/{apigroup_id}
+  method: get
+  operationId: getApiGroup
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /workspace/{workspace_id}/apigroup/{apigroup_id}
+  method: delete
+  operationId: deleteApiGroup
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /workspace/{workspace_id}/apigroup/{apigroup_id}/openapi
+  method: get
+  operationId: getApiGroupOpenApi
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /workspace/{workspace_id}/apigroup/{apigroup_id}/api
+  method: get
+  operationId: listApiEndpoints
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /workspace/{workspace_id}/apigroup/{apigroup_id}/api
+  method: post
+  operationId: createApiEndpoint
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
 - path: /auth/me
   method: get
   operationId: getAuthenticatedUser
@@ -24,9 +113,9 @@ operations:
     token:
       max-ttl: 3600
     audit: none
-- path: /workspace
+- path: /workspace/{workspace_id}/table/{table_id}/content
   method: get
-  operationId: listWorkspaces
+  operationId: listRecords
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -34,9 +123,41 @@ operations:
     token:
       max-ttl: 3600
     audit: none
-- path: /workspace/{workspace_id}
+- path: /workspace/{workspace_id}/table/{table_id}/content
+  method: post
+  operationId: createRecord
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /workspace/{workspace_id}/table/{table_id}/content/bulk
+  method: post
+  operationId: createRecordsBulk
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /workspace/{workspace_id}/table/{table_id}/content/{record_id}
   method: get
-  operationId: getWorkspace
+  operationId: getRecord
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -44,19 +165,25 @@ operations:
     token:
       max-ttl: 3600
     audit: none
-- path: /workspace/{workspace_id}/branch
-  method: get
-  operationId: listBranches
+- path: /workspace/{workspace_id}/table/{table_id}/content/{record_id}
+  method: patch
+  operationId: updateRecord
   x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
     token:
-      max-ttl: 3600
-    audit: none
-- path: /workspace/{workspace_id}/branch/{branch_id}
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /workspace/{workspace_id}/table/{table_id}/content/{record_id}
   method: delete
-  operationId: deleteBranch
+  operationId: deleteRecord
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -70,38 +197,16 @@ operations:
       - abnormal
       - high-value
     audit: required
-- path: /workspace/{workspace_id}/export-schema
+- path: /workspace/{workspace_id}/table/{table_id}/content/search
   method: post
-  operationId: exportWorkspaceSchema
+  operationId: searchRecords
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /workspace/{workspace_id}/export
-  method: post
-  operationId: exportWorkspace
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /workspace/{workspace_id}/files
   method: get
   operationId: listFiles
@@ -322,9 +427,9 @@ operations:
       - abnormal
       - high-value
     audit: required
-- path: /workspace/{workspace_id}/table/{table_id}/content
+- path: /workspace
   method: get
-  operationId: listRecords
+  operationId: listWorkspaces
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -332,41 +437,9 @@ operations:
     token:
       max-ttl: 3600
     audit: none
-- path: /workspace/{workspace_id}/table/{table_id}/content
-  method: post
-  operationId: createRecord
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /workspace/{workspace_id}/table/{table_id}/content/bulk
-  method: post
-  operationId: createRecordsBulk
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /workspace/{workspace_id}/table/{table_id}/content/{record_id}
+- path: /workspace/{workspace_id}
   method: get
-  operationId: getRecord
+  operationId: getWorkspace
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -374,25 +447,19 @@ operations:
     token:
       max-ttl: 3600
     audit: none
-- path: /workspace/{workspace_id}/table/{table_id}/content/{record_id}
-  method: patch
-  operationId: updateRecord
+- path: /workspace/{workspace_id}/branch
+  method: get
+  operationId: listBranches
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /workspace/{workspace_id}/table/{table_id}/content/{record_id}
+      max-ttl: 3600
+    audit: none
+- path: /workspace/{workspace_id}/branch/{branch_id}
   method: delete
-  operationId: deleteRecord
+  operationId: deleteBranch
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -406,9 +473,9 @@ operations:
       - abnormal
       - high-value
     audit: required
-- path: /workspace/{workspace_id}/table/{table_id}/content/search
+- path: /workspace/{workspace_id}/export-schema
   method: post
-  operationId: searchRecords
+  operationId: exportWorkspaceSchema
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -422,81 +489,9 @@ operations:
       - abnormal
       - high-value
     audit: required
-- path: /workspace/{workspace_id}/apigroup
-  method: get
-  operationId: listApiGroups
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /workspace/{workspace_id}/apigroup
+- path: /workspace/{workspace_id}/export
   method: post
-  operationId: createApiGroup
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /workspace/{workspace_id}/apigroup/{apigroup_id}
-  method: get
-  operationId: getApiGroup
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /workspace/{workspace_id}/apigroup/{apigroup_id}
-  method: delete
-  operationId: deleteApiGroup
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /workspace/{workspace_id}/apigroup/{apigroup_id}/openapi
-  method: get
-  operationId: getApiGroupOpenApi
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /workspace/{workspace_id}/apigroup/{apigroup_id}/api
-  method: get
-  operationId: listApiEndpoints
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /workspace/{workspace_id}/apigroup/{apigroup_id}/api
-  method: post
-  operationId: createApiEndpoint
+  operationId: exportWorkspace
   x-agentic-access:
     action-class: acting
     consequence: write
