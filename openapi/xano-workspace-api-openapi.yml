@@ -117,15 +117,6 @@ components:
         message:
           type: string
         payload: {}
-    Branch:
-      type: object
-      properties:
-        id:
-          type: string
-        label:
-          type: string
-        live:
-          type: boolean
     Workspace:
       type: object
       properties:
@@ -135,26 +126,15 @@ components:
           type: string
         description:
           type: string
-  responses:
-    NotFound:
-      description: Resource not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Success:
-      description: The operation succeeded.
-      content:
-        application/json:
-          schema:
-            type: object
-            additionalProperties: true
-    Unauthorized:
-      description: Missing or invalid access token.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
+    Branch:
+      type: object
+      properties:
+        id:
+          type: string
+        label:
+          type: string
+        live:
+          type: boolean
   parameters:
     BranchId:
       name: branch_id
@@ -168,6 +148,26 @@ components:
       required: true
       schema:
         type: integer
+  responses:
+    Unauthorized:
+      description: Missing or invalid access token.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Success:
+      description: The operation succeeded.
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+    NotFound:
+      description: Resource not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
     bearerAuth:
       type: http

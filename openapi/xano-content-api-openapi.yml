@@ -171,14 +171,14 @@ components:
       required: true
       schema:
         type: integer
-    WorkspaceId:
-      name: workspace_id
+    RecordId:
+      name: record_id
       in: path
       required: true
       schema:
         type: integer
-    RecordId:
-      name: record_id
+    WorkspaceId:
+      name: workspace_id
       in: path
       required: true
       schema:
@@ -192,25 +192,6 @@ components:
         message:
           type: string
         payload: {}
-    SearchRequest:
-      type: object
-      properties:
-        page:
-          type: integer
-        per_page:
-          type: integer
-        sort:
-          type: object
-          additionalProperties:
-            type: string
-        search:
-          type: array
-          items:
-            type: object
-    Record:
-      type: object
-      additionalProperties: true
-      description: A table record; properties correspond to the table's columns.
     RecordList:
       type: object
       properties:
@@ -234,13 +215,26 @@ components:
           type:
           - integer
           - 'null'
+    Record:
+      type: object
+      additionalProperties: true
+      description: A table record; properties correspond to the table's columns.
+    SearchRequest:
+      type: object
+      properties:
+        page:
+          type: integer
+        per_page:
+          type: integer
+        sort:
+          type: object
+          additionalProperties:
+            type: string
+        search:
+          type: array
+          items:
+            type: object
   responses:
-    NotFound:
-      description: Resource not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
     Success:
       description: The operation succeeded.
       content:
@@ -248,6 +242,12 @@ components:
           schema:
             type: object
             additionalProperties: true
+    NotFound:
+      description: Resource not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
     bearerAuth:
       type: http
