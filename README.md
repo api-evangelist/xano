@@ -1,4 +1,4 @@
-# Xano (xano)
+# Xano
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -66,179 +66,137 @@
 
 Xano is a no-code backend / backend-as-a-service that lets users visually build production REST APIs backed by a managed PostgreSQL database and serverless functions. Each workspace auto-generates its own OpenAPI/Swagger for the user-built API groups, and a separate per-instance Metadata API lets you manage tables, schema, records, files, and branches programmatically with Bearer auth.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/xano/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/xano/refs/heads/main/apis.yml)
+**Areas:** No-Code · Backend-as-a-Service · API Builder · Database · Serverless
 
-## Tags
+## Xano on APIs.io
 
-- No Code
-- Backend as a Service
-- BaaS
-- API Builder
-- Database
-- Serverless
+Everything profiled for Xano is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/xano/](https://apis.io/providers/xano/)** — or go straight to one of the APIs or properties below.
 
-## Timestamps
+### APIs (7)
 
-- **Created:** 2026-06-20
-- **Modified:** 2026-06-20
+- [Xano Generated User APIs](https://apis.io/apis/xano/xano-generated-user-apis/) — The REST APIs that Xano users build visually. Each API group is served at its own /api:{token} path on the instance and auto-generates its own…
+- [Xano API Groups API](https://apis.io/apis/xano/xano-api-groups-api/) — API groups, their endpoints, and generated OpenAPI.
+- [Xano Auth API](https://apis.io/apis/xano/xano-auth-api/) — Authenticated user and accessible workspaces.
+- [Xano Content API](https://apis.io/apis/xano/xano-content-api/) — Table records (database content) CRUD and search.
+- [Xano Files API](https://apis.io/apis/xano/xano-files-api/) — Workspace file library.
+- [Xano Tables API](https://apis.io/apis/xano/xano-tables-api/) — Database tables, schema, and indexes.
+- [Xano Workspace API](https://apis.io/apis/xano/xano-workspace-api/) — Workspace details, branches, import/export.
 
-## APIs
+### Published properties
 
-### Xano Metadata Tables & Schema API
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-Programmatically create, read, update, and delete database tables, their column schema, and indexes within a Xano workspace using the per-instance Metadata API.
+#### MCP servers (1)
 
-- **Human URL:** [https://docs.xano.com/xano-features/metadata-api/tables-and-schema](https://docs.xano.com/xano-features/metadata-api/tables-and-schema)
-- **Base URL:** `https://{instance}.xano.io/api:meta`
+Model Context Protocol servers that expose the API to agents.
 
-#### Tags
+- [xano](https://apis.io/servers/xano/xano/)
 
-- Metadata API
-- Tables
-- Schema
-- Indexes
+#### Agentic access (1)
 
-#### Properties
+Which operations an agent can call, which act, and which need a human in the loop.
 
-- [Documentation](https://docs.xano.com/xano-features/metadata-api/tables-and-schema)
-- [API Reference](https://docs.xano.com/xano-features/metadata-api)
-- [OpenAPI](openapi/xano-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/xano.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/xano.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [Xano Agentic Access](https://apis.io/agentic-access/xano/xano-agentic-access/)
 
-### Xano Metadata Records & Content API
+#### Collections (7)
 
-Browse, retrieve, create, update, search, and delete database records (table content) individually or in batches through the Metadata API content endpoints.
+Postman and Open Collection request collections.
 
-- **Human URL:** [https://docs.xano.com/xano-features/metadata-api/content](https://docs.xano.com/xano-features/metadata-api/content)
-- **Base URL:** `https://{instance}.xano.io/api:meta`
+- [Xano Metadata API](https://apis.io/collections/xano/open-xano/)
+- [Xano Metadata API Groups API](https://apis.io/collections/xano/open-xano-api-groups-api/)
+- [Xano Metadata API Groups Auth API](https://apis.io/collections/xano/open-xano-auth-api/)
+- [Xano Metadata API Groups Content API](https://apis.io/collections/xano/open-xano-content-api/)
+- [Xano Metadata API Groups Files API](https://apis.io/collections/xano/open-xano-files-api/)
+- [Xano Metadata API Groups Tables API](https://apis.io/collections/xano/open-xano-tables-api/)
+- [Xano Metadata API Groups Workspace API](https://apis.io/collections/xano/open-xano-workspace-api/)
 
-#### Tags
+#### Security (4)
 
-- Metadata API
-- Records
-- Content
-- CRUD
+Authentication, trust centre, and vulnerability disclosure.
 
-#### Properties
+- [Xano Authentication](https://apis.io/security/xano/xano-authentication/)
+- [Xano Domain Security](https://apis.io/security/xano/xano-domain-security/)
+- [Xano Trust Center](https://apis.io/security/xano/xano-trust-center/)
+- [Xano Vulnerability Disclosure](https://apis.io/security/xano/xano-vulnerability-disclosure/)
 
-- [Documentation](https://docs.xano.com/xano-features/metadata-api/content)
-- [OpenAPI](openapi/xano-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/xano.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/xano.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+#### Plans and pricing (1)
 
-### Xano Metadata Files API
+Published plans, tiers and prices.
 
-Upload, list, and delete files in a workspace file library, including batch deletion, via the Metadata API files endpoints.
+- [Xano Plans Pricing](https://apis.io/plans/xano/xano-plans-pricing/)
 
-- **Human URL:** [https://docs.xano.com/xano-features/metadata-api](https://docs.xano.com/xano-features/metadata-api)
-- **Base URL:** `https://{instance}.xano.io/api:meta`
+#### Rate limits (1)
 
-#### Tags
+Published request limits.
 
-- Metadata API
-- Files
-- Storage
-- Media
+- [Xano Rate Limits](https://apis.io/rate-limits/xano/xano-rate-limits/)
 
-#### Properties
+#### FinOps (1)
 
-- [Documentation](https://docs.xano.com/xano-features/metadata-api)
-- [OpenAPI](openapi/xano-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/xano.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/xano.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+What the API costs to run, by operation.
 
-### Xano Metadata Branches & Workspace API
+- [Xano Finops](https://apis.io/finops/xano/xano-finops/)
 
-Inspect workspace details, list and delete branches, and export or import workspace schema and data archives through the Metadata API workspace endpoints.
+## Where to find this API
 
-- **Human URL:** [https://docs.xano.com/xano-features/metadata-api](https://docs.xano.com/xano-features/metadata-api)
-- **Base URL:** `https://{instance}.xano.io/api:meta`
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
 
-#### Tags
-
-- Metadata API
-- Branches
-- Workspace
-- Import Export
-
-#### Properties
-
-- [Documentation](https://docs.xano.com/xano-features/metadata-api)
-- [OpenAPI](openapi/xano-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/xano.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/xano.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### Xano Metadata API Groups & Endpoints API
-
-Create and manage API groups and their endpoints, and retrieve the auto-generated OpenAPI/Swagger document for the user-built APIs each workspace exposes.
-
-- **Human URL:** [https://docs.xano.com/xano-features/metadata-api](https://docs.xano.com/xano-features/metadata-api)
-- **Base URL:** `https://{instance}.xano.io/api:meta`
-
-#### Tags
-
-- Metadata API
-- API Groups
-- Endpoints
-- OpenAPI
-
-#### Properties
-
-- [Documentation](https://docs.xano.com/xano-features/metadata-api)
-- [OpenAPI](openapi/xano-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/xano.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/xano.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### Xano Generated User APIs
-
-The REST APIs that Xano users build visually. Each API group is served at its own /api:{token} path on the instance and auto-generates its own OpenAPI/Swagger document; surface, paths, and auth are defined per workspace by the builder.
-
-- **Human URL:** [https://docs.xano.com/connecting-to-a-front-end/fundamentals](https://docs.xano.com/connecting-to-a-front-end/fundamentals)
-- **Base URL:** `https://{instance}.xano.io/api:{api_group}`
-
-#### Tags
-
-- Generated API
-- REST
-- No Code
-- OpenAPI
-
-#### Properties
-
-- [Documentation](https://docs.xano.com/connecting-to-a-front-end/fundamentals)
-- [API Reference](https://docs.xano.com/xano-features/metadata-api)
-
-### Xano Metadata Auth & Access API
-
-Identify the authenticated user and enumerate accessible workspaces. The Metadata API is authenticated with scoped Bearer access tokens generated from instance settings with CRUD permission scopes.
-
-- **Human URL:** [https://docs.xano.com/xano-features/metadata-api](https://docs.xano.com/xano-features/metadata-api)
-- **Base URL:** `https://{instance}.xano.io/api:meta`
-
-#### Tags
-
-- Metadata API
-- Authentication
-- Access Tokens
-- Bearer
-
-#### Properties
-
-- [Documentation](https://docs.xano.com/xano-features/metadata-api)
-- [OpenAPI](openapi/xano-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-
-## Common Properties
-
-- [GitHub Organization](https://github.com/xano-inc)
-- [LinkedIn](https://www.linkedin.com/company/xano)
 - [Website](https://www.xano.com)
 - [Documentation](https://docs.xano.com)
-- [Plans](plans/xano-plans-pricing.yml)
-- [Rate Limits](rate-limits/xano-rate-limits.yml)
-- [Fin Ops](finops/xano-finops.yml)
+- [Blog](https://www.xano.com/blog/)
+- [GitHub](https://github.com/xano-inc)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** Kin Lane
-**Email:** kin@apievangelist.com
+**Kin Score 30.9** — thin · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 68.3 |
+| Contract quality | 45.2 |
+| Contract governance | 0.0 |
+| Operational transparency | 21.1 |
+| Developer ergonomics | 32.1 |
+| Access clarity | 15.8 |
+
+**Agent readiness 42.4** — agent-ready (gated down from agent-native)
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | verified |
+| Auth Clarity | served (partial credit) |
+| Idempotency | — |
+| Error Semantics | — |
+| OpenAPI Examples | — |
+| Rate Limit Signal | derived (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | served (partial credit) |
+| Protected Resource Metadata | verified |
+| Dynamic Client Registration | yes |
+| Agentic Commerce | — |
+| Pagination Ratio | — |
+| Operation Distinctiveness | distinct |
+
+**Regulatory alignment 22.5** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/xano/](https://apis.io/providers/xano/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Xano: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/xano/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
